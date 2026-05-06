@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+
+# Google Search Console
+User-agent: Googlebot
+Allow: /
+
+# Crawl delay
+Crawl-delay: 0.5
+
+# Sitemap
+Sitemap: https://planyt.in/sitemap.xml

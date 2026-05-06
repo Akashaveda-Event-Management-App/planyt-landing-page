@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Planyt - Events that Inspire & Connect</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#2563eb;--blue-dark:#1d4ed8;--indigo:#4f46e5;--purple:#7c3aed;
+  --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-400:#9ca3af;
+  --gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;--gray-800:#1f2937;--gray-900:#111827;
+  --white:#fff;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#fff;color:var(--gray-900);overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+
+/* --- HEADER --- */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--gray-100);
+  padding:0 2rem;
+}
+.header-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:68px;gap:1rem}
+.brand{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--blue);text-decoration:none;letter-spacing:-.02em}
+.brand span{color:var(--gray-900)}
+nav.pill{display:flex;gap:.25rem;background:var(--gray-100);border:1px solid rgba(0,0,0,.06);border-radius:99px;padding:.375rem}
+nav.pill a{padding:.45rem 1.1rem;border-radius:99px;font-size:.85rem;font-weight:500;color:var(--gray-600);text-decoration:none;transition:all .2s}
+nav.pill a:hover{background:#fff;color:var(--gray-900);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.header-actions{display:flex;align-items:center;gap:.75rem}
+.btn-ghost{background:none;border:none;padding:.45rem 1rem;font-size:.85rem;font-weight:500;color:var(--gray-600);cursor:pointer;border-radius:8px;transition:color .2s}
+.btn-ghost:hover{color:var(--gray-900)}
+.btn-primary{background:var(--blue);color:#fff;border:none;padding:.55rem 1.4rem;border-radius:99px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:'Syne',sans-serif;transition:all .2s;box-shadow:0 4px 14px rgba(37,99,235,.3)}
+.btn-primary:hover{background:var(--blue-dark);transform:translateY(-1px);box-shadow:0 6px 20px rgba(37,99,235,.35)}
+.btn-outline{background:#fff;color:var(--blue);border:2px solid var(--blue);padding:.55rem 1.4rem;border-radius:99px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:'Syne',sans-serif;transition:all .2s}
+.btn-outline:hover{background:var(--blue);color:#fff}
+.sponsor-link{font-size:.82rem;color:#7c3aed;font-weight:500;text-decoration:none}
+.sponsor-link:hover{color:#6d28d9}
+.volunteer-link{font-size:.82rem;color:#0d9488;font-weight:500;text-decoration:none}
+.volunteer-link:hover{color:#0f766e}
+.hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:8px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--gray-700);border-radius:2px;transition:all .3s}
+.mobile-menu{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border-top:1px solid var(--gray-100);box-shadow:0 8px 24px rgba(0,0,0,.08);padding:1.5rem}
+.mobile-menu.open{display:block}
+.mobile-menu a{display:block;padding:.75rem 1rem;color:var(--gray-700);text-decoration:none;font-weight:500;border-radius:8px;transition:all .2s}
+.mobile-menu a:hover{background:var(--gray-50);color:var(--blue)}
+.mobile-divider{border-top:1px solid var(--gray-100);margin:1rem 0}
+
+@media(max-width:900px){
+  nav.pill{display:none}
+  .header-actions .btn-ghost,.header-actions .sponsor-link,.header-actions .volunteer-link{display:none}
+  .hamburger{display:flex}
+  .header-actions .btn-primary{display:none}
+}
+
+/* --- HERO --- */
+.hero{
+  position:relative;padding:5rem 2rem 4rem;overflow:hidden;
+  background:#fff;
+}
+.hero-bg{position:absolute;inset:0;pointer-events:none;z-index:0}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(to right,#f0f0f0 1px,transparent 1px),linear-gradient(to bottom,#f0f0f0 1px,transparent 1px);
+  background-size:4rem 4rem;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 0%,#000 60%,transparent 100%);
+}
+.hero-blob1{position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(99,102,241,.12),transparent 70%);border-radius:50%}
+.hero-blob2{position:absolute;bottom:-200px;left:-200px;width:500px;height:500px;background:radial-gradient(circle,rgba(37,99,235,.08),transparent 70%);border-radius:50%}
+.hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:#fff;border:1px solid rgba(37,99,235,.2);
+  color:var(--blue);padding:.45rem 1rem;border-radius:99px;
+  font-size:.8rem;font-weight:600;margin-bottom:1.75rem;
+  box-shadow:0 2px 8px rgba(37,99,235,.08);
+}
+.badge-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);animation:ping 1.5s ease-in-out infinite}
+@keyframes ping{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
+h1.hero-title{font-size:clamp(2.8rem,5vw,4.5rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:1.5rem;color:var(--gray-900)}
+h1.hero-title .gradient{background:linear-gradient(135deg,var(--blue),var(--indigo),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1.125rem;color:var(--gray-500);line-height:1.7;font-weight:300;margin-bottom:2.5rem;max-width:520px}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem}
+.btn-demo{display:flex;align-items:center;gap:.75rem;padding:.75rem 1.75rem;background:#fff;border:1.5px solid var(--gray-200);border-radius:99px;font-size:.9rem;font-weight:600;color:var(--gray-700);cursor:pointer;transition:all .2s;font-family:'Syne',sans-serif}
+.btn-demo:hover{border-color:var(--blue);color:var(--blue);box-shadow:0 4px 12px rgba(37,99,235,.1)}
+.play-icon{width:32px;height:32px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.6rem}
+.trusted-logos{border-top:1px solid var(--gray-100);padding-top:1.75rem}
+.trusted-label{font-size:.75rem;font-weight:600;color:var(--gray-400);letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+.logo-row{display:flex;gap:2rem;align-items:center;opacity:.5;filter:grayscale(1);transition:all .4s}
+.logo-row:hover{opacity:.9;filter:none}
+.logo-pill{font-size:.95rem;font-weight:700;color:var(--gray-700);display:flex;align-items:center;gap:.4rem}
+
+/* Hero visual */
+.hero-visual{position:relative}
+.dashboard-card{
+  background:#fff;border-radius:20px;border:3px solid #fff;
+  box-shadow:0 32px 80px rgba(0,0,0,.14);overflow:hidden;
+  transform:perspective(1000px) rotateY(-5deg) rotateX(3deg);
+  transition:transform .7s ease;
+}
+.dashboard-card:hover{transform:perspective(1000px) rotateY(0deg) rotateX(0deg)}
+.db-topbar{height:40px;background:var(--gray-800);display:flex;align-items:center;padding:0 1rem;gap:.5rem}
+.db-dot{width:10px;height:10px;border-radius:50%}
+.db-body{padding:1.5rem;background:#f8fafc;min-height:320px}
+.db-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.db-logo{width:28px;height:28px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.75rem;font-family:'Syne',sans-serif}
+.db-nav{display:flex;gap:.5rem}
+.db-nav-dot{width:24px;height:24px;border-radius:50%;background:var(--gray-100)}
+.db-grid{display:grid;grid-template-columns:80px 1fr;gap:.75rem}
+.db-sidebar{display:flex;flex-direction:column;gap:.5rem}
+.db-sb-item{height:28px;border-radius:8px;background:#fff;border:1px solid var(--gray-100)}
+.db-sb-item.active{background:rgba(37,99,235,.1);border-color:rgba(37,99,235,.2)}
+.db-main{display:flex;flex-direction:column;gap:.75rem}
+.db-banner{height:70px;background:linear-gradient(135deg,var(--blue),var(--indigo));border-radius:12px;position:relative;overflow:hidden;padding:.75rem}
+.db-banner-text1{height:8px;width:80px;background:rgba(255,255,255,.3);border-radius:99px;margin-bottom:.4rem}
+.db-banner-text2{height:14px;width:120px;background:rgba(255,255,255,.85);border-radius:99px}
+.db-cards{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.db-small-card{height:54px;background:#fff;border-radius:10px;border:1px solid var(--gray-100);box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.db-list{background:#fff;border-radius:10px;border:1px solid var(--gray-100);padding:.75rem}
+.db-list-row{height:6px;border-radius:99px;background:var(--gray-100);margin-bottom:.4rem}
+.db-list-row:last-child{width:70%;margin:0}
+
+/* Floating badges */
+.float-badge{
+  position:absolute;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.8);border-radius:16px;
+  padding:.75rem 1.1rem;box-shadow:0 8px 32px rgba(0,0,0,.12);
+  display:flex;align-items:center;gap:.75rem;z-index:10;
+  animation:float 3s ease-in-out infinite;
+}
+.float-badge.right{right:-2rem;top:4rem;animation-delay:.5s}
+.float-badge.left{left:-2rem;bottom:4rem;animation-delay:1s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.badge-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.badge-icon.green{background:#dcfce7;color:#16a34a}
+.badge-icon.blue{background:#dbeafe;color:var(--blue)}
+.badge-info p{margin:0;font-size:.7rem;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.05em}
+.badge-info strong{font-size:.88rem;color:var(--gray-900);font-family:'Syne',sans-serif}
+.avatar-stack{display:flex}
+.avatar{width:28px;height:28px;border-radius:50%;border:2px solid #fff;margin-left:-8px;background:var(--gray-200);font-size:.55rem;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+.avatar:first-child{margin:0}
+.av1{background:#6366f1}.av2{background:#f43f5e}.av3{background:#f59e0b}.av-count{background:var(--blue)}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:ping 1.5s ease-in-out infinite}
+.glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:110%;height:110%;background:radial-gradient(circle,rgba(99,102,241,.15),transparent 65%);z-index:-1;border-radius:50%}
+
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr}
+  .float-badge.right,.float-badge.left{display:none}
+  .hero-visual{order:-1}
+  .dashboard-card{transform:none}
+}
+
+/* --- STATS --- */
+.stats{background:var(--gray-900);padding:3rem 2rem}
+.stats-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#fff;margin-bottom:.25rem}
+.stat-label{font-size:.85rem;color:var(--gray-400);font-weight:400}
+@media(max-width:700px){.stats-inner{grid-template-columns:repeat(2,1fr)}}
+
+/* --- SECTION SHARED --- */
+.section{padding:5rem 2rem}
+.section-inner{max-width:1280px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:4rem}
+.section-header h2{font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-.03em;margin-bottom:1rem;color:var(--gray-900)}
+.section-header p{font-size:1.1rem;color:var(--gray-500);max-width:600px;margin:0 auto;font-weight:300;line-height:1.7}
+.tag{display:inline-block;background:rgba(37,99,235,.08);color:var(--blue);font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.3rem .9rem;border-radius:99px;margin-bottom:1rem;border:1px solid rgba(37,99,235,.15)}
+
+/* --- ABOUT --- */
+.about{background:#fff}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:4rem}
+.about-text h3{font-size:2rem;font-weight:800;margin-bottom:1.25rem;letter-spacing:-.02em}
+.about-text p{color:var(--gray-500);line-height:1.8;margin-bottom:1rem;font-weight:300}
+.about-visual{background:linear-gradient(135deg,#eff6ff,#eef2ff);border-radius:24px;padding:3rem;text-align:center;border:1px solid rgba(99,102,241,.1);min-height:360px;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.globe-icon{font-size:4rem;margin-bottom:1.5rem}
+.about-features{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2rem}
+.af-card{text-align:center;padding:2rem 1.25rem;border-radius:16px;transition:all .3s}
+.af-card:hover{background:var(--gray-50)}
+.af-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 1rem;box-shadow:0 2px 8px rgba(0,0,0,.08);background:#fff;border:1px solid var(--gray-100);transition:all .3s}
+.af-card:hover .af-icon{transform:scale(1.1)}
+.af-card h4{font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.af-card p{font-size:.85rem;color:var(--gray-500);line-height:1.6}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr}.about-features{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.about-features{grid-template-columns:1fr}}
+
+/* --- FEATURES BENTO --- */
+.features{background:var(--gray-50)}
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:1.25rem;margin-bottom:2.5rem}
+.bento-card{
+  background:#fff;border-radius:24px;border:1px solid var(--gray-100);
+  box-shadow:0 2px 12px rgba(0,0,0,.05);padding:2rem;
+  display:flex;flex-direction:column;gap:1.25rem;
+  transition:all .4s;overflow:hidden;
+}
+.bento-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.1);transform:translateY(-2px)}
+.bento-card.large{grid-column:span 7}
+.bento-card.small{grid-column:span 5}
+.bento-card h3{font-size:1.4rem;font-weight:700;color:var(--gray-900)}
+.bento-card p{font-size:.9rem;color:var(--gray-500);line-height:1.6}
+.pill-row{display:flex;flex-wrap:wrap;gap:.5rem}
+.feature-pill{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;background:#eff6ff;color:var(--blue);border:1px solid rgba(37,99,235,.15);border-radius:99px;font-size:.75rem;font-weight:600}
+.visual-box{flex:1;min-height:180px;border-radius:16px;background:var(--gray-50);border:1px solid var(--gray-100);overflow:hidden;position:relative;display:flex;align-items:stretch}
+/* visual internals */
+.v-calendar{padding:1rem;display:flex;flex-direction:column;gap:.6rem;width:100%}
+.v-row{display:flex;gap:.5rem}
+.v-block{height:14px;border-radius:4px;background:rgba(37,99,235,.15)}
+.v-block.blue{background:var(--blue)}
+.v-block.light{background:var(--gray-100)}
+.v-attendee{display:flex;align-items:center;gap:.6rem;background:#fff;padding:.5rem .75rem;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid var(--gray-100)}
+.v-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:700;color:#fff;flex-shrink:0}
+.v-line{height:5px;border-radius:99px;background:var(--gray-100)}
+.v-check{width:16px;height:16px;border-radius:50%;background:#22c55e;display:flex;align-items:center;justify-content:center;margin-left:auto;font-size:.45rem;color:#fff;flex-shrink:0}
+.v-stream{background:var(--gray-900);width:100%;display:flex;flex-direction:column}
+.v-stream-top{flex:1;display:flex;align-items:center;justify-content:center;position:relative}
+.v-play{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.6rem}
+.v-stream-bottom{height:28px;display:flex;gap:.4rem;padding:.4rem}
+.v-thumb{flex:1;background:var(--gray-700);border-radius:6px}
+.v-chat{padding:.75rem;display:flex;flex-direction:column;gap:.6rem;width:100%}
+.v-msg{display:flex;gap:.5rem;align-items:flex-start}
+.v-msg.right{flex-direction:row-reverse}
+.v-bubble{background:#fff;padding:.4rem .6rem;border-radius:10px;border-radius:10px 10px 10px 2px;border:1px solid var(--gray-100);display:flex;flex-direction:column;gap:.25rem}
+.v-msg.right .v-bubble{background:var(--blue);border-color:transparent;border-radius:10px 10px 2px 10px}
+.v-bubble-line{height:4px;border-radius:99px;background:var(--gray-100)}
+.v-msg.right .v-bubble-line{background:rgba(255,255,255,.35)}
+.v-poll{padding:1rem;display:flex;flex-direction:column;gap:.6rem;width:100%}
+.v-poll-label{display:flex;justify-content:space-between;font-size:.65rem;color:var(--gray-400);font-weight:600;margin-bottom:.1rem}
+.v-bar{height:6px;background:var(--gray-100);border-radius:99px;overflow:hidden;margin-bottom:.5rem}
+.v-fill{height:100%;border-radius:99px;background:var(--blue)}
+.v-ticket{background:linear-gradient(135deg,var(--indigo),var(--purple));border-radius:12px;padding:1rem;color:#fff;position:relative;overflow:hidden;width:100%;margin:.5rem}
+.v-ticket-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem}
+.v-ticket-name{height:10px;width:60px;background:rgba(255,255,255,.8);border-radius:99px}
+.v-ticket-icon{width:20px;height:20px;border:1.5px solid rgba(255,255,255,.4);border-radius:4px}
+.v-ticket-barcode{height:24px;border-left:2px solid rgba(255,255,255,.3);border-right:2px solid rgba(255,255,255,.3);margin:0 .5rem;display:flex;align-items:center;gap:2px;padding:0 .25rem}
+.v-barline{width:2px;border-radius:1px;background:rgba(255,255,255,.4)}
+/* features extra bar */
+.extras-bar{background:linear-gradient(135deg,var(--blue),var(--indigo));border-radius:24px;padding:3rem;color:#fff;text-align:center;position:relative;overflow:hidden}
+.extras-bar h3{font-size:1.75rem;font-weight:700;margin-bottom:2rem}
+.extras-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem}
+.extra-item{background:rgba(255,255,255,.12);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:1.25rem 1rem;font-size:.85rem;font-weight:600;transition:all .2s}
+.extra-item:hover{background:rgba(255,255,255,.22)}
+.extra-icon{font-size:1.25rem;margin-bottom:.5rem}
+@media(max-width:1000px){.extras-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){
+  .bento-card.large,.bento-card.small{grid-column:span 12}
+  .extras-grid{grid-template-columns:1fr 1fr}
+}
+
+/* --- EVENT TYPES --- */
+.event-types{background:#fff}
+.et-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+.et-card{border:1px solid var(--gray-100);border-radius:18px;padding:1.75rem 1.25rem;text-align:center;transition:all .3s;cursor:default}
+.et-card:hover{box-shadow:0 8px 32px rgba(37,99,235,.1);border-color:rgba(37,99,235,.2);transform:translateY(-2px)}
+.et-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.25rem;transition:transform .3s}
+.et-card:hover .et-icon{transform:scale(1.1)}
+.et-name{font-size:.9rem;font-weight:600;color:var(--gray-800)}
+.et-card:hover .et-name{color:var(--blue)}
+@media(max-width:900px){.et-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.et-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* --- APP SECTION --- */
+.app-section{background:var(--gray-50)}
+.app-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.browser-wrap{position:relative}
+.browser{
+  background:var(--gray-900);border-radius:20px;overflow:hidden;
+  box-shadow:0 32px 80px rgba(0,0,0,.2);border:3px solid var(--gray-900);
+  max-width:480px;margin:0 auto;
+}
+.browser-bar{height:34px;background:var(--gray-800);display:flex;align-items:center;padding:0 1rem;gap:.5rem}
+.bw-dot{width:10px;height:10px;border-radius:50%}
+.url-bar{flex:1;background:var(--gray-700);border-radius:99px;height:20px;margin-left:.75rem;display:flex;align-items:center;padding:0 .75rem;gap:.4rem;opacity:.6}
+.url-dot{width:6px;height:6px;border-radius:50%;background:var(--gray-500)}
+.url-line{height:4px;width:80px;border-radius:99px;background:var(--gray-600)}
+.browser-content{background:#fff;padding:1rem;display:flex;flex-direction:column;gap:.75rem}
+.bc-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:.75rem;border-bottom:1px solid var(--gray-100)}
+.bc-logo{width:24px;height:24px;background:var(--blue);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.6rem;color:#fff;font-family:'Syne',sans-serif}
+.bc-dots{display:flex;gap:.4rem}
+.bc-dot-nav{width:22px;height:22px;border-radius:50%;background:var(--gray-100)}
+.bc-body{display:grid;grid-template-columns:70px 1fr;gap:.75rem}
+.bc-sidebar{display:flex;flex-direction:column;gap:.4rem}
+.bc-sb{height:24px;border-radius:6px;background:var(--gray-50);border:1px solid var(--gray-100)}
+.bc-sb.active{background:rgba(37,99,235,.08);border-color:rgba(37,99,235,.15)}
+.bc-main{display:flex;flex-direction:column;gap:.6rem}
+.bc-hero{height:60px;background:linear-gradient(135deg,var(--blue),var(--indigo));border-radius:10px;padding:.6rem .75rem;display:flex;flex-direction:column;justify-content:center;gap:.25rem}
+.bc-ht1{height:6px;width:70px;background:rgba(255,255,255,.3);border-radius:99px}
+.bc-ht2{height:10px;width:100px;background:rgba(255,255,255,.85);border-radius:99px}
+.bc-cards2{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.bc-card2{height:44px;background:#fff;border-radius:8px;border:1px solid var(--gray-100)}
+.bc-rows{background:#fff;border-radius:8px;border:1px solid var(--gray-100);padding:.5rem;display:flex;flex-direction:column;gap:.3rem}
+.bc-row{height:4px;border-radius:99px;background:var(--gray-100)}
+.app-blob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;background:radial-gradient(circle,rgba(99,102,241,.15),transparent 65%);border-radius:50%;z-index:-1}
+.app-features{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem 3rem}
+.app-feat{display:flex;flex-direction:column;gap:.5rem}
+.af-ic{width:44px;height:44px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid var(--gray-100);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--blue);transition:all .3s}
+.app-feat:hover .af-ic{background:var(--blue);color:#fff;transform:scale(1.1)}
+.app-feat h4{font-size:1rem;font-weight:700;color:var(--gray-900)}
+.app-feat p{font-size:.85rem;color:var(--gray-500);line-height:1.6}
+.access-card{margin-top:2.5rem;background:#fff;border-radius:18px;border:1px solid var(--gray-100);box-shadow:0 4px 16px rgba(0,0,0,.06);padding:1.5rem;position:relative;overflow:hidden}
+.access-deco{position:absolute;top:0;right:0;width:80px;height:80px;background:linear-gradient(135deg,#eff6ff,#eef2ff);border-bottom-left-radius:80px}
+.access-card h4{font-size:1rem;font-weight:700;margin-bottom:.4rem}
+.access-card p{font-size:.85rem;color:var(--gray-500);margin-bottom:1rem;line-height:1.6}
+.browser-types{display:flex;align-items:center;gap:.75rem;font-size:.8rem;color:var(--gray-400);font-weight:500}
+.browser-icon{font-size:1.25rem;color:var(--gray-400)}
+@media(max-width:900px){.app-grid{grid-template-columns:1fr}}
+
+/* --- PRICING --- */
+.pricing{background:#fff}
+.pricing-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
+.pc{background:var(--gray-50);border:1px solid var(--gray-100);border-radius:20px;padding:2rem}
+.pc-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:1rem}
+.pc h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.pc p{font-size:.9rem;color:var(--gray-500);line-height:1.6}
+@media(max-width:700px){.pricing-cards{grid-template-columns:1fr}}
+.pricing-cta{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:3rem}
+
+/* --- FAQ --- */
+.faq{background:var(--gray-50)}
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:.75rem}
+.faq-item{background:#fff;border:1px solid var(--gray-100);border-radius:16px;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.faq-item.open{border-color:rgba(37,99,235,.25);box-shadow:0 4px 24px rgba(37,99,235,.08)}
+.faq-btn{width:100%;padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;background:none;border:none;cursor:pointer;text-align:left;gap:1rem}
+.faq-q{font-size:.95rem;font-weight:600;color:var(--gray-900);transition:color .2s}
+.faq-item.open .faq-q{color:var(--blue)}
+.faq-chevron{width:30px;height:30px;border-radius:50%;background:var(--gray-50);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s;font-size:.7rem;color:var(--gray-400)}
+.faq-item.open .faq-chevron{background:rgba(37,99,235,.1);color:var(--blue);transform:rotate(180deg)}
+.faq-ans{max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s}
+.faq-ans p{padding:0 1.5rem 1.25rem;font-size:.9rem;color:var(--gray-600);line-height:1.7;border-top:1px solid var(--gray-50);padding-top:1rem}
+.faq-item.open .faq-ans{max-height:200px}
+.faq-footer{text-align:center;margin-top:2.5rem}
+.faq-footer p{color:var(--gray-500);margin-bottom:.75rem;font-size:.9rem}
+
+/* --- CONTACT --- */
+.contact{background:#fff;position:relative;overflow:hidden}
+.contact-blob1{position:absolute;top:-200px;left:25%;width:400px;height:400px;background:radial-gradient(circle,rgba(37,99,235,.06),transparent 70%);border-radius:50%;pointer-events:none}
+.contact-blob2{position:absolute;bottom:-200px;right:25%;width:400px;height:400px;background:radial-gradient(circle,rgba(99,102,241,.06),transparent 70%);border-radius:50%;pointer-events:none}
+.contact-grid{display:grid;grid-template-columns:2fr 3fr;gap:3rem;align-items:start}
+.contact-info-card{background:#fff;border-radius:24px;box-shadow:0 4px 32px rgba(0,0,0,.08);border:1px solid var(--gray-100);padding:2rem;position:relative;overflow:hidden}
+.ci-deco{position:absolute;top:0;right:0;width:80px;height:80px;background:var(--gray-50);border-bottom-left-radius:80px}
+.ci-title{font-size:1.25rem;font-weight:700;margin-bottom:1.5rem;position:relative}
+.ci-item{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:1.25rem}
+.ci-icon{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem;transition:all .3s;cursor:default}
+.ci-item:hover .ci-icon{filter:brightness(1.1);transform:scale(1.05)}
+.ci-icon.blue{background:rgba(37,99,235,.1);color:var(--blue)}
+.ci-icon.purple{background:rgba(124,58,237,.1);color:var(--purple)}
+.ci-label{font-size:.7rem;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.15rem}
+.ci-val{font-size:.9rem;color:var(--gray-700)}
+.ci-val a{text-decoration:none;color:var(--gray-700);transition:color .2s}
+.ci-val a:hover{color:var(--blue)}
+.ci-sub{font-size:.75rem;color:var(--gray-400);margin-top:.1rem}
+.ci-divider{border-top:1px solid var(--gray-100);margin:1.25rem 0}
+.social-row{display:flex;gap:.6rem}
+.soc-btn{width:36px;height:36px;border-radius:50%;background:var(--gray-50);border:none;cursor:pointer;font-size:.85rem;color:var(--gray-400);display:flex;align-items:center;justify-content:center;transition:all .3s}
+.soc-btn:hover{background:var(--blue);color:#fff;transform:translateY(-2px)}
+.urgent-card{background:linear-gradient(135deg,var(--blue),var(--indigo));border-radius:20px;padding:1.75rem;color:#fff;margin-top:1.25rem;position:relative;overflow:hidden}
+.uc-blob{position:absolute;bottom:-20px;right:-20px;width:80px;height:80px;background:rgba(255,255,255,.1);border-radius:50%}
+.urgent-card h3{font-size:1rem;font-weight:700;margin-bottom:.4rem}
+.urgent-card p{font-size:.8rem;color:rgba(255,255,255,.75);margin-bottom:1rem;line-height:1.6}
+.chat-btn{background:#fff;color:var(--blue);border:none;border-radius:12px;padding:.75rem;font-weight:700;font-size:.85rem;width:100%;cursor:pointer;font-family:'Syne',sans-serif;transition:all .2s}
+.chat-btn:hover{background:var(--gray-50)}
+/* form */
+.form-card{background:#fff;border-radius:24px;box-shadow:0 8px 48px rgba(0,0,0,.1);border:1px solid var(--gray-100);padding:2.5rem}
+.form-card h3{font-size:1.25rem;font-weight:700;margin-bottom:1.75rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-group{margin-bottom:1rem}
+label{display:block;font-size:.8rem;font-weight:600;color:var(--gray-700);margin-bottom:.4rem;margin-left:.25rem}
+input,select,textarea{
+  width:100%;padding:.75rem 1rem;background:var(--gray-50);border:1.5px solid var(--gray-200);
+  border-radius:12px;font-size:.9rem;font-family:'Inter',sans-serif;
+  outline:none;transition:all .2s;color:var(--gray-900)
+}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.08)}
+textarea{resize:none}
+.submit-btn{
+  width:100%;padding:1rem;background:var(--blue);color:#fff;border:none;border-radius:14px;
+  font-size:1rem;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;
+  transition:all .3s;box-shadow:0 4px 16px rgba(37,99,235,.25)
+}
+.submit-btn:hover{background:var(--blue-dark);transform:translateY(-1px);box-shadow:0 6px 24px rgba(37,99,235,.3)}
+.submit-btn.success{background:#16a34a}
+.submit-btn.error{background:#dc2626}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}}
+
+/* --- CTA BANNER --- */
+.cta-banner{background:var(--blue);padding:4.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+.cta-inner{max-width:800px;margin:0 auto;position:relative;z-index:1}
+.cta-banner h2{font-size:clamp(2rem,4vw,3rem);font-weight:800;color:#fff;margin-bottom:1rem;letter-spacing:-.02em}
+.cta-banner p{color:rgba(255,255,255,.8);font-size:1.1rem;margin-bottom:2.5rem;font-weight:300}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-white{background:#fff;color:var(--blue);border:none;padding:.85rem 2rem;border-radius:99px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;transition:all .2s;text-decoration:none;display:inline-block}
+.btn-white:hover{background:var(--gray-50);transform:translateY(-1px)}
+.btn-ghost-white{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6);padding:.85rem 2rem;border-radius:99px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;transition:all .2s;display:flex;align-items:center;gap:.6rem}
+.btn-ghost-white:hover{background:rgba(255,255,255,.15);border-color:#fff}
+.cta-blob1{position:absolute;top:-100px;left:-100px;width:300px;height:300px;background:rgba(255,255,255,.05);border-radius:50%}
+.cta-blob2{position:absolute;bottom:-100px;right:-100px;width:300px;height:300px;background:rgba(255,255,255,.05);border-radius:50%}
+
+/* --- FOOTER --- */
+footer{background:var(--gray-900);color:#fff;padding:4rem 2rem 2rem}
+.footer-inner{max-width:1280px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand p{font-size:.85rem;color:var(--gray-400);line-height:1.7;margin:1rem 0 1.5rem;max-width:300px}
+.foot-social{display:flex;gap:.6rem}
+.foot-soc{width:36px;height:36px;border-radius:50%;background:var(--gray-800);border:none;cursor:pointer;color:var(--gray-400);display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .3s}
+.foot-soc:hover{background:var(--blue);color:#fff;transform:translateY(-2px)}
+footer h4{font-size:.95rem;font-weight:700;margin-bottom:1.25rem}
+footer ul{list-style:none}
+footer ul li{margin-bottom:.75rem}
+footer ul li a{color:var(--gray-400);text-decoration:none;font-size:.85rem;transition:color .2s}
+footer ul li a:hover{color:rgba(96,165,250,1)}
+.footer-bottom{border-top:1px solid var(--gray-800);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+.footer-bottom p{font-size:.82rem;color:var(--gray-500)}
+.made-with{display:flex;align-items:center;gap:.35rem;font-size:.82rem;color:var(--gray-500)}
+.heart{color:#f43f5e;animation:ping 1.5s ease-in-out infinite}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.footer-grid{grid-template-columns:1fr}}
+
+/* Modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem}
+.modal-box{background:#fff;border-radius:20px;width:100%;max-width:800px;max-height:90vh;overflow-y:auto;box-shadow:0 32px 80px rgba(0,0,0,.3)}
+.modal-header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--gray-100);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-radius:20px 20px 0 0}
+.modal-header h3{font-size:1rem;font-weight:700}
+.modal-close{background:none;border:none;cursor:pointer;font-size:1rem;color:var(--gray-500);padding:.4rem;border-radius:8px;transition:all .2s}
+.modal-close:hover{background:var(--gray-100);color:var(--gray-900)}
+.modal-body{padding:1.5rem}
+.modal-body h2{font-size:1.5rem;font-weight:800;margin-bottom:1rem}
+.modal-body h3{font-size:1.1rem;font-weight:700;margin:1.25rem 0 .5rem}
+.modal-body p{font-size:.9rem;color:var(--gray-600);line-height:1.7;margin-bottom:.75rem}
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="brand">Plan<span>yt</span></a>
+
+    <nav class="pill">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How it Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="#" class="sponsor-link">Sponsor Login</a>
+      <a href="#" class="volunteer-link">Volunteer Login</a>
+      <a href="#" class="btn-ghost">Log In</a>
+      <button class="btn-primary">Get Started</button>
+      <button class="hamburger" onclick="toggleMenu(this)" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#features" onclick="closeMobileMenu()">Features</a>
+    <a href="#how-it-works" onclick="closeMobileMenu()">How it Works</a>
+    <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
+    <a href="#about" onclick="closeMobileMenu()">About</a>
+    <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+    <div class="mobile-divider"></div>
+    <a href="#">Sponsor Login</a>
+    <a href="#">Volunteer Login</a>
+    <a href="#">Log In</a>
+    <button class="btn-primary" style="width:100%;margin-top:.5rem">Get Started Free</button>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <div class="hero-blob1"></div>
+    <div class="hero-blob2"></div>
+  </div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        The Future of Event Management
+      </div>
+      <h1 class="hero-title">
+        Events that<br>
+        <span class="gradient">Inspire &amp; Connect</span>
+      </h1>
+      <p class="hero-desc">The complete platform for modern event experiences. Streamline your event lifecycle from registration to post-event analytics with our all-in-one solution.</p>
+      <div class="hero-cta">
+        <a href="https://app.planyt.in" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding:.85rem 2rem;font-size:1rem;text-decoration:none">Start Free Trial</a>
+        <button class="btn-demo">
+          <span class="play-icon">&#9654;</span>
+          Watch Demo
+        </button>
+      </div>
+      <div class="trusted-logos">
+        <div class="trusted-label">Trusted by innovative teams</div>
+        <div class="logo-row">
+          <span class="logo-pill">🌐 GlobalCorp</span>
+          <span class="logo-pill">⚡ TechStart</span>
+          <span class="logo-pill">🏢 Enterprise</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="glow"></div>
+      <div class="dashboard-card">
+        <div class="db-topbar">
+          <div class="db-dot" style="background:#ef4444"></div>
+          <div class="db-dot" style="background:#f59e0b"></div>
+          <div class="db-dot" style="background:#22c55e"></div>
+        </div>
+        <div class="db-body">
+          <div class="db-header">
+            <div class="db-logo">P</div>
+            <div class="db-nav">
+              <div class="db-nav-dot"></div>
+              <div class="db-nav-dot"></div>
+            </div>
+          </div>
+          <div class="db-grid">
+            <div class="db-sidebar">
+              <div class="db-sb-item active"></div>
+              <div class="db-sb-item"></div>
+              <div class="db-sb-item"></div>
+              <div class="db-sb-item" style="height:60px;margin-top:.5rem"></div>
+            </div>
+            <div class="db-main">
+              <div class="db-banner">
+                <div class="db-banner-text1"></div>
+                <div class="db-banner-text2"></div>
+              </div>
+              <div class="db-cards">
+                <div class="db-small-card"></div>
+                <div class="db-small-card"></div>
+              </div>
+              <div class="db-list">
+                <div class="db-list-row"></div>
+                <div class="db-list-row"></div>
+                <div class="db-list-row"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="float-badge right">
+        <div class="badge-icon green">✓</div>
+        <div class="badge-info">
+          <p>Status</p>
+          <strong>Registration Open</strong>
+        </div>
+      </div>
+
+      <div class="float-badge left">
+        <div class="avatar-stack">
+          <div class="avatar av1">SJ</div>
+          <div class="avatar av2">MC</div>
+          <div class="avatar av3">ER</div>
+          <div class="avatar av-count">+1.2k</div>
+        </div>
+        <div class="badge-info" style="margin-left:.5rem">
+          <strong>Attendees Joined</strong>
+          <div style="display:flex;align-items:center;gap:.4rem;margin-top:.25rem">
+            <span class="live-dot"></span>
+            <span style="font-size:.72rem;color:#22c55e;font-weight:600">Live Now</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STATS ===================== -->
+<section class="stats">
+  <div class="stats-inner">
+    <div><div class="stat-num">Scalable</div><div class="stat-label">Built for Growth</div></div>
+    <div><div class="stat-num">Secure</div><div class="stat-label">Enterprise Ready</div></div>
+    <div><div class="stat-num">Global</div><div class="stat-label">Multi-Language</div></div>
+    <div><div class="stat-num">Support</div><div class="stat-label">24/7 Assistance</div></div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about" class="section about">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="tag">About Us</div>
+      <h2>About <span style="color:var(--blue)">Planyt</span></h2>
+      <p>Planyt is your all-in-one partner for creating seamless event experiences. We simplify the complexity of event planning so you can focus on what matters most—connecting people.</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <h3>Our Mission</h3>
+        <p>At Planyt, we believe that great events are built on great connections. Our mission is to provide organizers with intuitive, powerful tools that make planning effortless and execution flawless.</p>
+        <p>Whether you're hosting a small workshop, a corporate seminar, or a large-scale international conference, our platform adapts to your needs. We bring together registration, engagement, and analytics into one unified ecosystem.</p>
+        <p>We're committed to innovation and reliability, ensuring that every event powered by Planyt runs smoothly, securely, and successfully.</p>
+        <div style="margin-top:1.5rem">
+          <a href="#contact" class="btn-outline" style="text-decoration:none;display:inline-block;padding:.7rem 1.5rem">Get in Touch</a>
+        </div>
+      </div>
+      <div class="about-visual">
+        <div class="globe-icon">🌐</div>
+        <h4 style="font-size:1.4rem;font-weight:700;margin-bottom:.75rem">Global Event Solutions</h4>
+        <p style="color:var(--gray-500);max-width:360px;line-height:1.7;font-size:.9rem">Empowering organizers worldwide with scalable technology for in-person, virtual, and hybrid events.</p>
+      </div>
+    </div>
+
+    <div class="about-features">
+      <div class="af-card">
+        <div class="af-icon">💡</div>
+        <h4>Innovation First</h4>
+        <p>We constantly push the boundaries of event technology, bringing you cutting-edge features that set your events apart.</p>
+      </div>
+      <div class="af-card">
+        <div class="af-icon">🛡️</div>
+        <h4>Secure &amp; Reliable</h4>
+        <p>Built with enterprise-grade security standards to ensure your data and your attendees' information is always protected.</p>
+      </div>
+      <div class="af-card">
+        <div class="af-icon">❤️</div>
+        <h4>User-Centric Design</h4>
+        <p>Every feature is crafted with the user in mind. We prioritize intuitive design for a seamless experience.</p>
+      </div>
+      <div class="af-card">
+        <div class="af-icon">🌍</div>
+        <h4>Global Reach</h4>
+        <p>Supporting events worldwide with multi-language capabilities and diverse payment options to connect a global audience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FEATURES ===================== -->
+<section id="features" class="section features">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="tag">Features</div>
+      <h2>Comprehensive Event Management</h2>
+      <p>Everything you need to create, manage, and execute successful events—from intimate gatherings to large-scale conferences.</p>
+    </div>
+
+    <div class="bento">
+      <!-- Card 1: Large -->
+      <div class="bento-card large">
+        <h3>Event Creation &amp; Management</h3>
+        <p>Complete lifecycle management with an intuitive drag-and-drop builder.</p>
+        <div class="pill-row">
+          <span class="feature-pill">✓ Multi-track agendas</span>
+          <span class="feature-pill">✓ Speaker management</span>
+          <span class="feature-pill">✓ Venue mapping</span>
+        </div>
+        <div class="visual-box">
+          <div class="v-calendar">
+            <div class="v-row"><div class="v-block blue" style="width:40%"></div><div class="v-block light" style="width:25%;margin-left:auto"></div></div>
+            <div style="display:flex;gap:.75rem">
+              <div style="flex:1;background:#fff;border-radius:10px;border:1px solid var(--gray-100);padding:.6rem"><div class="v-block" style="width:60%;background:rgba(37,99,235,.15);height:10px;margin-bottom:.4rem"></div><div class="v-block light" style="width:80%;height:6px"></div></div>
+              <div style="flex:1;background:#fff;border-radius:10px;border:1px solid rgba(37,99,235,.2);padding:.6rem"><div class="v-block blue" style="width:60%;height:10px;margin-bottom:.4rem"></div><div class="v-block light" style="width:80%;height:6px"></div></div>
+              <div style="flex:1;background:#fff;border-radius:10px;border:1px solid var(--gray-100);padding:.6rem"><div class="v-block" style="width:60%;background:rgba(37,99,235,.15);height:10px;margin-bottom:.4rem"></div><div class="v-block light" style="width:80%;height:6px"></div></div>
+            </div>
+            <div style="background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.1);border-radius:10px;height:32px;display:flex;align-items:center;padding:0 .75rem"><div class="v-block" style="width:50%;background:rgba(37,99,235,.2);height:6px"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Small -->
+      <div class="bento-card small">
+        <h3>Attendee Management</h3>
+        <p>Seamless registration, check-in, and engagement tracking.</p>
+        <div class="pill-row">
+          <span class="feature-pill">✓ QR check-in</span>
+          <span class="feature-pill">✓ Custom badges</span>
+          <span class="feature-pill">✓ Real-time tracking</span>
+        </div>
+        <div class="visual-box" style="flex-direction:column;padding:.75rem;gap:.5rem">
+          <div class="v-attendee">
+            <div class="v-avatar" style="background:#22c55e">SJ</div>
+            <div style="flex:1"><div class="v-line" style="width:70%;margin-bottom:.3rem"></div><div class="v-line" style="width:45%"></div></div>
+            <div class="v-check">✓</div>
+          </div>
+          <div class="v-attendee" style="opacity:.7">
+            <div class="v-avatar" style="background:#3b82f6">MC</div>
+            <div style="flex:1"><div class="v-line" style="width:70%;margin-bottom:.3rem"></div><div class="v-line" style="width:45%"></div></div>
+          </div>
+          <div class="v-attendee" style="opacity:.5">
+            <div class="v-avatar" style="background:#f59e0b">ER</div>
+            <div style="flex:1"><div class="v-line" style="width:70%;margin-bottom:.3rem"></div><div class="v-line" style="width:45%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Small -->
+      <div class="bento-card small">
+        <h3>Virtual &amp; Hybrid Support</h3>
+        <p>Connect global audiences with HD streaming and virtual booths.</p>
+        <div class="pill-row">
+          <span class="feature-pill">✓ Live streaming</span>
+          <span class="feature-pill">✓ Virtual booths</span>
+          <span class="feature-pill">✓ Networking rooms</span>
+        </div>
+        <div class="visual-box">
+          <div class="v-stream">
+            <div class="v-stream-top">
+              <div class="v-play">▶</div>
+            </div>
+            <div class="v-stream-bottom">
+              <div class="v-thumb"></div>
+              <div class="v-thumb"></div>
+              <div class="v-thumb"></div>
+              <div class="v-thumb" style="display:flex;align-items:center;justify-content:center;font-size:.55rem;color:var(--gray-400)">+12</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Large -->
+      <div class="bento-card large">
+        <h3>Smart Networking</h3>
+        <p>AI-powered matchmaking and real-time interaction tools.</p>
+        <div class="pill-row">
+          <span class="feature-pill">✓ 1:1 Video calls</span>
+          <span class="feature-pill">✓ Smart matching</span>
+          <span class="feature-pill">✓ Live chat</span>
+        </div>
+        <div class="visual-box" style="background:#eff6ff;border-color:rgba(37,99,235,.1)">
+          <div class="v-chat">
+            <div class="v-msg">
+              <div class="v-avatar" style="background:#6366f1;width:24px;height:24px;font-size:.5rem;flex-shrink:0">AK</div>
+              <div class="v-bubble"><div class="v-bubble-line" style="width:100px"></div><div class="v-bubble-line" style="width:70px"></div></div>
+            </div>
+            <div class="v-msg right">
+              <div class="v-avatar" style="background:#4f46e5;width:24px;height:24px;font-size:.5rem;flex-shrink:0">ME</div>
+              <div class="v-bubble"><div class="v-bubble-line" style="width:80px"></div><div class="v-bubble-line" style="width:110px"></div></div>
+            </div>
+            <div class="v-msg">
+              <div class="v-avatar" style="background:#6366f1;width:24px;height:24px;font-size:.5rem;flex-shrink:0">AK</div>
+              <div class="v-bubble"><div class="v-bubble-line" style="width:60px"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Large -->
+      <div class="bento-card large">
+        <h3>Interactive Sessions</h3>
+        <p>Keep audiences engaged with live polls, Q&A, and gamification.</p>
+        <div class="pill-row">
+          <span class="feature-pill">✓ Live polling</span>
+          <span class="feature-pill">✓ Q&A moderation</span>
+          <span class="feature-pill">✓ Leaderboards</span>
+        </div>
+        <div class="visual-box">
+          <div class="v-poll">
+            <div class="v-poll-label"><span>Poll Results</span><span style="color:var(--blue)">Live</span></div>
+            <div class="v-bar"><div class="v-fill" style="width:75%"></div></div>
+            <div class="v-bar"><div class="v-fill" style="width:45%;background:var(--indigo)"></div></div>
+            <div class="v-bar"><div class="v-fill" style="width:20%;background:var(--gray-300)"></div></div>
+            <div style="display:flex;gap:.5rem;margin-top:.5rem">
+              <div style="flex:1;background:#eff6ff;border-radius:10px;height:30px;display:flex;align-items:center;justify-content:center;font-size:.75rem">📊</div>
+              <div style="flex:1;background:#fff7ed;border-radius:10px;height:30px;display:flex;align-items:center;justify-content:center;font-size:.75rem">🏆</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: Small -->
+      <div class="bento-card small">
+        <h3>Registration &amp; Ticketing</h3>
+        <p>Flexible ticketing engine with secure payment processing.</p>
+        <div class="pill-row">
+          <span class="feature-pill">✓ Tiered pricing</span>
+          <span class="feature-pill">✓ Discount codes</span>
+          <span class="feature-pill">✓ Global payments</span>
+        </div>
+        <div class="visual-box" style="padding:.75rem;align-items:center">
+          <div class="v-ticket">
+            <div class="v-ticket-top">
+              <div><div class="v-ticket-name" style="margin-bottom:.3rem;height:6px;width:80px"></div><div style="height:14px;width:100px;background:rgba(255,255,255,.9);border-radius:99px"></div></div>
+              <div class="v-ticket-icon"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:.65rem;color:rgba(255,255,255,.6);margin-bottom:.4rem"><span>Admit One</span><span>$299</span></div>
+            <div class="v-ticket-barcode">
+              <div class="v-barline" style="height:18px"></div><div class="v-barline" style="height:12px"></div><div class="v-barline" style="height:20px"></div><div class="v-barline" style="height:14px"></div><div class="v-barline" style="height:18px"></div><div class="v-barline" style="height:10px"></div><div class="v-barline" style="height:16px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extras bar -->
+    <div class="extras-bar">
+      <div class="cta-blob1"></div>
+      <h3>Plus Many More Features</h3>
+      <div class="extras-grid">
+        <div class="extra-item"><div class="extra-icon">💬</div>Communication Tools</div>
+        <div class="extra-item"><div class="extra-icon">📈</div>Analytics &amp; Reporting</div>
+        <div class="extra-item"><div class="extra-icon">🤝</div>Sponsor &amp; Exhibitor Mgmt</div>
+        <div class="extra-item"><div class="extra-icon">🔔</div>Real-time Notifications</div>
+        <div class="extra-item"><div class="extra-icon">🎨</div>Custom Websites</div>
+      </div>
+      <button class="btn-white">View All Features</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EVENT TYPES ===================== -->
+<section class="section event-types">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2>Perfect for Every Event Type</h2>
+      <p>Whether you're organizing a small workshop or a global conference, Planyt adapts to your needs.</p>
+    </div>
+    <div class="et-grid">
+      <div class="et-card"><div class="et-icon" style="background:#dbeafe;color:#2563eb">💼</div><div class="et-name">Corporate Events</div></div>
+      <div class="et-card"><div class="et-icon" style="background:#ede9fe;color:#7c3aed">🎤</div><div class="et-name">Conferences</div></div>
+      <div class="et-card"><div class="et-icon" style="background:#dcfce7;color:#16a34a">🏪</div><div class="et-name">Trade Shows</div></div>
+      <div class="et-card"><div class="et-icon" style="background:#fef9c3;color:#ca8a04">🤝</div><div class="et-name">Meetings</div></div>
+      <div class="et-card"><div class="et-icon" style="background:#fee2e2;color:#dc2626">🔧</div><div class="et-name">Workshops</div></div>
+      <div class="et-card"><div class="et-icon" style="background:#e0e7ff;color:#4f46e5">💡</div><div class="et-name">Seminars</div></div>
+      <div class="et-card"><div class="et-icon" style="background:#fce7f3;color:#be185d">🎓</div><div class="et-name">Academic Events</div></div>
+      <div class="et-card"><div class="et-icon" style="background:#f3f4f6;color:#374151">🏛️</div><div class="et-name">Government Events</div></div>
+      <div class="et-card"><div class="et-icon" style="background:#ffedd5;color:#c2410c">👥</div><div class="et-name">Association Events</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== APP / DEVICE SECTION ===================== -->
+<section id="how-it-works" class="section app-section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="tag">Platform</div>
+      <h2>Seamless Experience on Any Device</h2>
+      <div style="display:flex;align-items:center;justify-content:center;gap:.75rem;margin-bottom:.75rem">
+        <span style="font-size:1.4rem;color:#facc15">★★★★★</span>
+        <span style="font-size:1.3rem;font-weight:700">4.8/5</span>
+      </div>
+      <p>Access the full power of Planyt directly from your browser. No downloads required.</p>
+    </div>
+
+    <div class="app-grid">
+      <div class="browser-wrap">
+        <div class="app-blob"></div>
+        <div class="browser">
+          <div class="browser-bar">
+            <div class="bw-dot" style="background:#ef4444"></div>
+            <div class="bw-dot" style="background:#f59e0b"></div>
+            <div class="bw-dot" style="background:#22c55e"></div>
+            <div class="url-bar">
+              <div class="url-dot"></div>
+              <div class="url-line"></div>
+            </div>
+          </div>
+          <div class="browser-content">
+            <div class="bc-header">
+              <div class="bc-logo">P</div>
+              <div class="bc-dots"><div class="bc-dot-nav"></div><div class="bc-dot-nav"></div></div>
+            </div>
+            <div class="bc-body">
+              <div class="bc-sidebar">
+                <div class="bc-sb active"></div>
+                <div class="bc-sb"></div>
+                <div class="bc-sb"></div>
+                <div class="bc-sb" style="height:50px;margin-top:.5rem"></div>
+              </div>
+              <div class="bc-main">
+                <div class="bc-hero"><div class="bc-ht1"></div><div class="bc-ht2"></div></div>
+                <div class="bc-cards2"><div class="bc-card2"></div><div class="bc-card2"></div></div>
+                <div class="bc-rows"><div class="bc-row"></div><div class="bc-row" style="width:80%"></div><div class="bc-row" style="width:60%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="app-features">
+          <div class="app-feat"><div class="af-ic">🌐</div><h4>Live Networking</h4><p>Connect attendees in real-time with smart matching and 1:1 video calls.</p></div>
+          <div class="app-feat"><div class="af-ic">📊</div><h4>Interactive Polls</h4><p>Engage your audience instantly with live polls and Q&A moderation.</p></div>
+          <div class="app-feat"><div class="af-ic">📹</div><h4>Live Streaming</h4><p>Hybrid event capabilities with HD quality and virtual booths.</p></div>
+          <div class="app-feat"><div class="af-ic">💬</div><h4>Q&amp;A Sessions</h4><p>Real-time audience interaction with moderation tools.</p></div>
+          <div class="app-feat"><div class="af-ic">👤</div><h4>Attendee Profiles</h4><p>Rich networking profiles to facilitate meaningful connections.</p></div>
+          <div class="app-feat"><div class="af-ic">🏆</div><h4>Gamification</h4><p>Increase engagement with points, badges, and leaderboards.</p></div>
+        </div>
+        <div class="access-card">
+          <div class="access-deco"></div>
+          <h4>Accessible Everywhere</h4>
+          <p>No app store downloads needed. Planyt works flawlessly on Chrome, Safari, Firefox, and Edge.</p>
+          <div class="browser-types">
+            <span>🌐</span>
+            <span>Desktop • Tablet • Mobile</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRICING ===================== -->
+<section id="pricing" class="section pricing">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="tag">Pricing</div>
+      <h2>Get Started with Planyt</h2>
+      <p>We offer flexible solutions tailored to your specific event needs. Contact us to discuss your requirements and get a custom quote.</p>
+    </div>
+    <div class="pricing-cta">
+      <a href="#contact" class="btn-primary" style="padding:.85rem 2rem;font-size:1rem;text-decoration:none">Contact Sales</a>
+      <a href="https://app.planyt.in" target="_blank" rel="noopener noreferrer" class="btn-outline" style="padding:.85rem 2rem;font-size:1rem;text-decoration:none">Start Free Trial</a>
+    </div>
+    <div class="pricing-cards">
+      <div class="pc">
+        <div class="pc-icon" style="background:#dbeafe"><span style="font-size:1.2rem">✓</span></div>
+        <h3>Tailored Features</h3>
+        <p>Get exactly what you need with our modular feature set designed around your workflow.</p>
+      </div>
+      <div class="pc">
+        <div class="pc-icon" style="background:#ede9fe"><span style="font-size:1.2rem">🤝</span></div>
+        <h3>Dedicated Support</h3>
+        <p>Expert assistance to ensure your event runs smoothly from setup to post-event reporting.</p>
+      </div>
+      <div class="pc">
+        <div class="pc-icon" style="background:#dcfce7"><span style="font-size:1.2rem">🚀</span></div>
+        <h3>Scalable Platform</h3>
+        <p>From small meetups to global conferences, Planyt grows with you every step of the way.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="section faq">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="tag">FAQ</div>
+      <h2>Frequently Asked Questions</h2>
+      <p>Everything you need to know about Planyt. Can't find what you're looking for? Chat with our team.</p>
+    </div>
+    <div class="faq-list" id="faqList">
+      <!-- filled by JS -->
+    </div>
+    <div class="faq-footer">
+      <p>Still have questions?</p>
+      <button class="btn-outline" style="padding:.65rem 1.75rem">Contact Support</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact" class="section contact">
+  <div class="contact-blob1"></div>
+  <div class="contact-blob2"></div>
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="tag">Contact</div>
+      <h2>Get in <span style="color:var(--blue)">Touch</span></h2>
+      <p>Ready to transform your events? We'd love to hear from you. Reach out and let's make something amazing together.</p>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-info-card">
+          <div class="ci-deco"></div>
+          <div class="ci-title">Contact Information</div>
+          <div class="ci-item">
+            <div class="ci-icon blue">✉️</div>
+            <div>
+              <div class="ci-label">Email Us</div>
+              <div class="ci-val"><a href="mailto:contact@planyt.in">contact@planyt.in</a></div>
+              <div class="ci-sub">We'll respond within 24 hours</div>
+            </div>
+          </div>
+          <div class="ci-item">
+            <div class="ci-icon purple">📍</div>
+            <div>
+              <div class="ci-label">Visit Us</div>
+              <div class="ci-val">Bangalore, India</div>
+              <div class="ci-sub">Come say hello at our HQ</div>
+            </div>
+          </div>
+          <div class="ci-divider"></div>
+          <div style="font-weight:600;font-size:.9rem;margin-bottom:.75rem">Follow Us</div>
+          <div class="social-row">
+            <button class="soc-btn">in</button>
+            <button class="soc-btn">𝕏</button>
+            <button class="soc-btn">f</button>
+            <button class="soc-btn">📸</button>
+          </div>
+        </div>
+        <div class="urgent-card" style="margin-top:1rem">
+          <div class="uc-blob"></div>
+          <h3>Need Immediate Help?</h3>
+          <p>Our support team is available 24/7 to assist you with any urgent queries.</p>
+          <button class="chat-btn">Chat with Support</button>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>Send Us a Message</h3>
+        <form id="contactForm" onsubmit="handleFormSubmit(event)">
+          <div class="form-row">
+            <div class="form-group" style="margin:0">
+              <label>First Name</label>
+              <input type="text" name="firstName" placeholder="John" required>
+            </div>
+            <div class="form-group" style="margin:0">
+              <label>Last Name</label>
+              <input type="text" name="lastName" placeholder="Doe" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <select name="subject">
+              <option>General Inquiry</option>
+              <option>Sales &amp; Pricing</option>
+              <option>Technical Support</option>
+              <option>Partnership</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea name="message" rows="4" placeholder="Tell us about your event needs..." required></textarea>
+          </div>
+          <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section class="cta-banner">
+  <div class="cta-blob1"></div>
+  <div class="cta-blob2"></div>
+  <div class="cta-inner">
+    <h2>Ready to Get Started?</h2>
+    <p>Join thousands of event organizers who trust Planyt to create exceptional experiences.</p>
+    <div class="cta-btns">
+      <a href="https://app.planyt.in" target="_blank" rel="noopener noreferrer" class="btn-white" style="text-decoration:none">Start Free Trial</a>
+      <button class="btn-ghost-white"><span>▶</span> Watch Demo</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:#fff">Plan<span style="color:rgba(96,165,250,1)">yt</span></div>
+        <p>The complete platform for modern event experiences. Streamline your event lifecycle from registration to post-event analytics.</p>
+        <div class="foot-social">
+          <button class="foot-soc">in</button>
+          <button class="foot-soc">𝕏</button>
+          <button class="foot-soc">f</button>
+          <button class="foot-soc">📸</button>
+        </div>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#">Event App</a></li>
+          <li><a href="#">Integrations</a></li>
+          <li><a href="#">Sponsor Login</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Press Kit</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#" onclick="openModal('privacy');return false">Privacy Policy</a></li>
+          <li><a href="#" onclick="openModal('terms');return false">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Planyt. All rights reserved.</p>
+      <div class="made-with">Made with <span class="heart">❤️</span> for events worldwide</div>
+    </div>
+  </div>
+</footer>
+
+<!-- Privacy Modal -->
+<div class="modal-backdrop" id="privacyModal" style="display:none" onclick="if(event.target===this)closeModal('privacy')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Privacy Policy</h3>
+      <button class="modal-close" onclick="closeModal('privacy')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h2>Privacy Policy</h2>
+      <p><strong>Last updated:</strong> January 2025</p>
+      <h3>1. Information We Collect</h3>
+      <p>We collect information you provide directly to us, such as when you create an account, register for events, or contact us for support. This may include your name, email address, phone number, and payment information.</p>
+      <h3>2. How We Use Your Information</h3>
+      <p>We use the information we collect to provide, maintain, and improve our services, process transactions, send you technical notices and support messages, and respond to your comments and questions.</p>
+      <h3>3. Information Sharing</h3>
+      <p>We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties without your consent, except to trusted third parties who assist us in operating our platform.</p>
+      <h3>4. Data Security</h3>
+      <p>We implement appropriate technical and organizational security measures to protect your personal information against accidental or unlawful destruction, loss, alteration, unauthorized disclosure, or access.</p>
+      <h3>5. Contact Us</h3>
+      <p>If you have any questions about this Privacy Policy, please contact us at contact@planyt.in.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Terms Modal -->
+<div class="modal-backdrop" id="termsModal" style="display:none" onclick="if(event.target===this)closeModal('terms')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Terms &amp; Conditions</h3>
+      <button class="modal-close" onclick="closeModal('terms')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h2>Terms of Service</h2>
+      <p><strong>Last updated:</strong> January 2025</p>
+      <h3>1. Acceptance of Terms</h3>
+      <p>By accessing and using Planyt, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by these terms, please do not use this service.</p>
+      <h3>2. Use License</h3>
+      <p>Permission is granted to temporarily use Planyt for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title.</p>
+      <h3>3. Disclaimer</h3>
+      <p>The materials on Planyt are provided on an 'as is' basis. Planyt makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability.</p>
+      <h3>4. Limitations</h3>
+      <p>In no event shall Planyt or its suppliers be liable for any damages arising out of the use or inability to use the materials on Planyt's website, even if Planyt has been notified of the possibility of such damage.</p>
+      <h3>5. Contact Us</h3>
+      <p>If you have any questions about these Terms, please contact us at contact@planyt.in.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// FAQ Data
+const faqs = [
+  { q: "How quickly can I set up my first event?", a: "Most events can be set up in under 30 minutes using our guided setup wizard. Our templates and smart defaults help you get started immediately." },
+  { q: "Do you offer custom integrations?", a: "Yes! We have a robust API and can create custom integrations with your existing tools like CRM, marketing automation, and payment systems." },
+  { q: "What kind of support do you provide?", a: "We offer email support for all plans, priority support for Professional users, and dedicated phone support for Enterprise customers. Our team is available 24/7 during events." },
+  { q: "Can I use my own branding?", a: "Absolutely! All plans include custom branding options. Enterprise customers get complete white-label solutions." },
+  { q: "Is my data secure?", a: "Security is our top priority. We're SOC 2 compliant, GDPR compliant, and use enterprise-grade encryption for all data." },
+  { q: "Do you support hybrid and virtual events?", a: "Yes! Our platform supports in-person, virtual, and hybrid events with seamless attendee experiences across all formats." },
+];
+
+// Render FAQ
+const faqList = document.getElementById('faqList');
+faqs.forEach((faq, i) => {
+  const item = document.createElement('div');
+  item.className = 'faq-item';
+  item.innerHTML = `
+    <button class="faq-btn" onclick="toggleFaq(${i})">
+      <span class="faq-q">${faq.q}</span>
+      <span class="faq-chevron" id="chevron-${i}">▾</span>
+    </button>
+    <div class="faq-ans" id="ans-${i}"><p>${faq.a}</p></div>
+  `;
+  faqList.appendChild(item);
+});
+
+let openFaq = null;
+function toggleFaq(i) {
+  const items = document.querySelectorAll('.faq-item');
+  if (openFaq === i) {
+    items[i].classList.remove('open');
+    openFaq = null;
+  } else {
+    if (openFaq !== null) items[openFaq].classList.remove('open');
+    items[i].classList.add('open');
+    openFaq = i;
+  }
+}
+
+// Mobile menu
+function toggleMenu(btn) {
+  const menu = document.getElementById('mobileMenu');
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+function closeMobileMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// Modals
+function openModal(type) {
+  document.getElementById(type + 'Modal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(type) {
+  document.getElementById(type + 'Modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// Form
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  setTimeout(() => {
+    btn.textContent = 'Message Sent! ✓';
+    btn.classList.add('success');
+    e.target.reset();
+    setTimeout(() => {
+      btn.textContent = 'Send Message';
+      btn.classList.remove('success');
+      btn.disabled = false;
+    }, 3000);
+  }, 1200);
+}
+
+// Smooth scroll nav active state
+const navLinks = document.querySelectorAll('nav.pill a');
+const sections = ['features','how-it-works','pricing','about','contact'];
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 120) current = id;
+  });
+  navLinks.forEach(a => {
+    a.style.background = a.getAttribute('href') === '#' + current ? '#fff' : '';
+    a.style.boxShadow = a.getAttribute('href') === '#' + current ? '0 1px 4px rgba(0,0,0,.08)' : '';
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gray-900)' : '';
+  });
+});
+</script>
+</body>
+</html>
