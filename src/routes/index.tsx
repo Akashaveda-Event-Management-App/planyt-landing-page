@@ -1,22 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import Header from "../components/planyt/Header";
-import Hero from "../components/planyt/Hero";
-import Stats from "../components/planyt/Stats";
-import About from "../components/planyt/About";
-import Features from "../components/planyt/Features";
-import EventTypes from "../components/planyt/EventTypes";
-import AppSection from "../components/planyt/AppSection";
-import Pricing from "../components/planyt/Pricing";
-import FAQ from "../components/planyt/FAQ";
-import Contact from "../components/planyt/Contact";
-import CTABanner from "../components/planyt/CTABanner";
-import Footer from "../components/planyt/Footer";
+import LandingPage from "../components/landing/LandingPage";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { property: "og:title", content: "Planyt | Event Management Software for Modern Organizers" },
-      { property: "og:description", content: "Stop juggling spreadsheets. Planyt handles registration, ticketing, engagement, and post-event analytics—all in one place." },
+      { property: "og:title", content: "Planyt for organizers: registration, papers, check-in and certificates in one place" },
+      { property: "og:description", content: "Run your conference on Planyt: registration and payments to your own account, call for papers and peer review, agenda, QR check-in, live Q&A, sponsors and certificates." },
       { property: "og:url", content: "https://planyt.in" },
       { name: "twitter:title", content: "Planyt - Run Better Events Faster" },
       { name: "twitter:description", content: "Event management software built for organizers. Handle registration, payments, check-ins, and analytics in one platform." },
@@ -28,18 +17,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <>
-      <Header />
-      <Hero />
-      <Stats />
-      <About />
-      <Features />
-      <EventTypes />
-      <AppSection />
-      <Pricing />
-      <FAQ />
-      <Contact />
-      <CTABanner />
-      <Footer />
+      <LandingPage />
       
       {/* Structured Data - Organization Schema */}
       <script type="application/ld+json">
@@ -53,7 +31,6 @@ function Index() {
           "foundingDate": "2025",
           "contactPoint": {
             "@type": "ContactPoint",
-            "telephone": "+91-XXXXXXXXXX",
             "contactType": "Customer Support",
             "email": "contact@planyt.in"
           },
@@ -76,15 +53,9 @@ function Index() {
           "operatingSystem": "Web",
           "offers": {
             "@type": "Offer",
-            "price": "0",
             "priceCurrency": "INR",
             "availability": "https://schema.org/InStock",
-            "description": "Free trial available"
-          },
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "ratingCount": "150"
+            "description": "Priced per event or per year; quote on request"
           }
         })}
       </script>
