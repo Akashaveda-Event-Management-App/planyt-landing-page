@@ -12,6 +12,10 @@ export const useReveal = () => {
       if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
     }), { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
     els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    // Pause the pixel twinkle in sections that are off screen (see .pl-idle in the CSS).
+    const live = new IntersectionObserver((entries) => entries.forEach((e) => e.target.classList.toggle("pl-idle", !e.isIntersecting)), { rootMargin: "200px 0px" });
+    const blocks = [...document.querySelectorAll("main > *, footer")];
+    blocks.forEach((b) => { b.classList.add("pl-idle"); live.observe(b); });
+    return () => { io.disconnect(); live.disconnect(); };
   }, []);
 };

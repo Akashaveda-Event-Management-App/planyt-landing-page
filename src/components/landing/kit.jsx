@@ -39,13 +39,13 @@ export const Checker = React.memo(({ cols = 7, rows = 6, size = 12, colors, corn
     const dy = corner.includes("t") ? y : rows - 1 - y;
     const d = (dx + dy) / (cols + rows - 2);
     const on = ((dx + dy) % 2 === 0 && d < reach) || d < 0.12 || ((dx * 7 + dy * 3) % 5 === 0 && d < reach * 0.7);
-    cells.push(
-      <span key={`${x}-${y}`} style={{ width: size, height: size, opacity: on ? Math.max(0, 1 - d / reach) : 0 }}>
-        {on && <span className="pl-pix" style={{ display: "block", width: "100%", height: "100%", background: colors[(dx + dy * 2) % colors.length], animationDelay: `${(d * 2.6).toFixed(2)}s` }} />}
-      </span>,
+    // Lit squares only, placed by row/column: empty squares used to be invisible elements
+    // (thousands of them on the landing page). --o is the square's fade; .pl-pix twinkles around it.
+    if (on) cells.push(
+      <span key={`${x}-${y}`} className="pl-pix" style={{ gridRow: y + 1, gridColumn: x + 1, background: colors[(dx + dy * 2) % colors.length], "--o": Math.max(0, 1 - d / reach).toFixed(2), animationDelay: `${(d * 2.6).toFixed(2)}s` }} />,
     );
   }
-  return <div aria-hidden="true" style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, ${size}px)` }}>{cells}</div>;
+  return <div aria-hidden="true" style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, ${size}px)`, gridTemplateRows: `repeat(${rows}, ${size}px)` }}>{cells}</div>;
 });
 
 export const CK = {
@@ -82,13 +82,24 @@ export const Dither = ({ cols = 110, rows = 4, size = 18, color = "#071B43" }) =
 };
 
 /** A counter that ticks once a second while `active`. Drives the live mini-UIs. */
-export const useTick = (active = true, ms = 1000) => {
+/**
+ * A counter that ticks every `ms`. With `ref`, it only ticks while that element is on screen:
+ * the hero tiles and dashboard previews used to re-render and repaint all the time, off screen too.
+ */
+export const useTick = (active = true, ms = 1000, ref = null) => {
   const [t, setT] = useState(0);
+  const [seen, setSeen] = useState(!ref);
   useEffect(() => {
-    if (!active || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return undefined;
+    if (!ref?.current || !("IntersectionObserver" in window)) { setSeen(true); return undefined; }
+    const io = new IntersectionObserver(([e]) => setSeen(e.isIntersecting));
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, [ref]);
+  useEffect(() => {
+    if (!active || !seen || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return undefined;
     const i = setInterval(() => setT((x) => x + 1), ms);
     return () => clearInterval(i);
-  }, [active, ms]);
+  }, [active, seen, ms]);
   return t;
 };
 

@@ -12,11 +12,13 @@ export const frameSize = (w) => {
   return { b, scrW, scrH, h: scrH + 2 * b };
 };
 
-export const ScreenFrame = ({ w, bottom, frameRef, bootRef, screenRef, children }) => {
+// ready=false keeps it hidden until the page has measured the real screen (planyt.in renders on the
+// server at a desktop size; showing that first made the frame jump on phones: layout shift).
+export const ScreenFrame = ({ w, bottom, frameRef, bootRef, screenRef, ready = true, children }) => {
   const { b, scrW, scrH } = frameSize(w);
   const r = Math.round(b * 2.2);
   return (
-    <div aria-hidden="true" className="absolute inset-x-0 z-[3] flex justify-center pointer-events-none" style={{ bottom }}>
+    <div aria-hidden="true" className="absolute inset-x-0 z-[3] flex justify-center pointer-events-none" style={{ bottom, visibility: ready ? undefined : "hidden" }}>
       <div ref={frameRef} className="relative will-change-transform" style={{ width: w, padding: b, borderRadius: r, transformOrigin: "50% 100%", background: "linear-gradient(180deg,#1c2029,#0b0d12)", boxShadow: "0 0 0 1.5px #3a404c, inset 0 0 0 1px rgba(255,255,255,.08), 0 50px 100px -30px rgba(0,0,0,.75), 0 0 120px -20px rgba(0,82,201,.45)" }}>
         <span className="absolute left-1/2 -translate-x-1/2 rounded-full" style={{ top: Math.round(b / 2 - 3), width: 6, height: 6, background: "radial-gradient(circle at 35% 35%,#3b4456,#11141a)" }} />
         <div className="relative overflow-hidden bg-[#071B43]" style={{ height: scrH, borderRadius: Math.max(4, Math.round(r - b)) }}>

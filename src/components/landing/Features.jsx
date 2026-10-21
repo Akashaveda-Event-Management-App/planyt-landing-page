@@ -36,13 +36,13 @@ export const Features = () => {
     return () => clearTimeout(t);
   }, [auto, cur]);
 
-  // phones: keep the active item in view in the scrollable row
+  // phones: keep the active item centred in the sideways row. Scroll the row itself only:
+  // scrollIntoView also scrolled the whole page down to here on load and on every rotation.
   useEffect(() => {
-    const el = listRef.current?.children[cur];
-    if (el && window.innerWidth < 1024) el.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+    const row = listRef.current, el = row?.children[cur];
+    if (!el || window.innerWidth >= 1024) return;
+    row.scrollTo({ left: el.offsetLeft - (row.clientWidth - el.clientWidth) / 2, behavior: "smooth" });
   }, [cur]);
-
-  const [name, icon, line, fields] = FEATURES[cur];
 
   return (
     <Band id="features" dark>
@@ -58,23 +58,32 @@ export const Features = () => {
             <span className="ml-auto text-[12px] font-bold tracking-[0.16em] text-[#0052C9]">FEATURE PASS</span>
           </div>
 
-          <div key={cur} className="pl-fade flex-1 flex flex-col">
-            <p className="mt-7 sm:mt-8 flex items-center gap-2 text-[12px] font-semibold tracking-[0.14em] text-[#6B7690]">
-              <span className="w-7 h-7 rounded-[9px] bg-[#E6EEFD] flex items-center justify-center"><Ico n={icon} c="#0052C9" s={15} /></span>
-              MODULE {pad(cur + 1)} / {pad(FEATURES.length)} · INCLUDED
-            </p>
-            <h3 className="mt-3 font-display font-extrabold tracking-[-0.03em] leading-[1.05] text-[clamp(30px,3.6vw,46px)] [text-wrap:balance]">{name}</h3>
+          {/* Every module sits in the same grid cell; only the current one shows. The card keeps the
+              tallest module's height, so the page doesn't jump each time it rotates (layout shift). */}
+          <div className="flex-1 grid">
+            {FEATURES.map(([name, icon, line, fields], i) => {
+              const on = i === cur;
+              return (
+                <div key={on ? `on${cur}` : i} aria-hidden={!on} className={`[grid-area:1/1] flex flex-col ${on ? "pl-fade" : "invisible"}`}>
+                  <p className="mt-7 sm:mt-8 flex items-center gap-2 text-[12px] font-semibold tracking-[0.14em] text-[#6B7690]">
+                    <span className="w-7 h-7 rounded-[9px] bg-[#E6EEFD] flex items-center justify-center"><Ico n={icon} c="#0052C9" s={15} /></span>
+                    MODULE {pad(i + 1)} / {pad(FEATURES.length)} · INCLUDED
+                  </p>
+                  <h3 className="mt-3 font-display font-extrabold tracking-[-0.03em] leading-[1.05] text-[clamp(30px,3.6vw,46px)] [text-wrap:balance]">{name}</h3>
 
-            <dl className="mt-7 sm:mt-8 grid grid-cols-3 gap-4 max-w-[560px]">
-              {fields.map(([k, v]) => (
-                <div key={k}><dt className="text-[12px] text-[#6B7690]">{k}</dt><dd className="mt-0.5 text-[15px] sm:text-[17px] font-bold leading-tight">{v}</dd></div>
-              ))}
-            </dl>
+                  <dl className="mt-7 sm:mt-8 grid grid-cols-3 gap-4 max-w-[560px]">
+                    {fields.map(([k, v]) => (
+                      <div key={k}><dt className="text-[12px] text-[#6B7690]">{k}</dt><dd className="mt-0.5 text-[15px] sm:text-[17px] font-bold leading-tight">{v}</dd></div>
+                    ))}
+                  </dl>
 
-            <div className="mt-auto pt-8 flex items-end justify-between gap-6">
-              <div className="min-w-0"><p className="text-[12px] text-[#6B7690]">In short</p><p className="mt-0.5 text-[15px] sm:text-[16px] font-semibold leading-snug [text-wrap:pretty]">{line}</p></div>
-              <Barcode />
-            </div>
+                  <div className="mt-auto pt-8 flex items-end justify-between gap-6">
+                    <div className="min-w-0"><p className="text-[12px] text-[#6B7690]">In short</p><p className="mt-0.5 text-[15px] sm:text-[16px] font-semibold leading-snug [text-wrap:pretty]">{line}</p></div>
+                    {on ? <Barcode /> : <div className="hidden sm:block flex-none w-[166px] h-8" />}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </article>
 

@@ -16,8 +16,9 @@ const seg = (x, a, b) => Math.max(0, Math.min(1, (x - a) / (b - a)));
 const ease = (x) => (x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2);
 
 const DashScreen = ({ role }) => {
-  const t = useTick(true, 1500);
-  return renderDash(role, HOMES[role](t));
+  const ref = useRef(null);
+  const t = useTick(true, 1500, ref); // live numbers only while the screen is visible
+  return <div ref={ref} style={{ width: 1280, height: 800 }}>{renderDash(role, HOMES[role](t))}</div>;
 };
 
 const Chips = ({ items }) => (
@@ -36,6 +37,7 @@ export const HeroLaptop = () => {
   const introRef = useRef(null), dashRef = useRef(null);
   // Fixed first render (server and client agree); real size is read after mount.
   const [vp, setVp] = useState({ w: 1280, h: 800 });
+  const [ready, setReady] = useState(false); // the frame shows once sized for this screen
   const [st, setSt] = useState({ role: 0, phase: 0 });
 
   useEffect(() => {
@@ -68,6 +70,7 @@ export const HeroLaptop = () => {
     const onScroll = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(run); };
     const onResize = () => { setVp({ w: window.innerWidth, h: window.innerHeight }); onScroll(); };
     onResize();
+    setReady(true);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
     return () => { cancelAnimationFrame(raf); window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onResize); };
@@ -113,7 +116,7 @@ export const HeroLaptop = () => {
 
         </div>
 
-        <ScreenFrame w={lapW} bottom={lapBottom} frameRef={frameRef} bootRef={bootRef} screenRef={screenRef}>
+        <ScreenFrame w={lapW} bottom={lapBottom} frameRef={frameRef} bootRef={bootRef} screenRef={screenRef} ready={ready}>
           <DashScreen role={DR[st.role]} />
         </ScreenFrame>
 

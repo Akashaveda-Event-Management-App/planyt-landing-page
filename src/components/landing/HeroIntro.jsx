@@ -157,7 +157,9 @@ const TILES = [
 ];
 
 const Tile = ({ tile, t, style, className = "" }) => {
-  const [photo, setPhoto] = useState(null); // null = checking, true = photo, false = vignette
+  // null = not known yet, true = photo, false = vignette. The photo shows until it fails, so the
+  // browser paints it as soon as it arrives (it waited for the scripts: a late LCP on phones).
+  const [photo, setPhoto] = useState(null);
   const img = useRef(null);
   // A server-rendered image can finish loading before React attaches onLoad: read its state on mount.
   useEffect(() => { const el = img.current; if (el?.complete) setPhoto(el.naturalWidth > 0); }, []);
@@ -166,8 +168,8 @@ const Tile = ({ tile, t, style, className = "" }) => {
     <div aria-hidden="true" className={`relative overflow-hidden rounded-2xl ${className}`} style={{ background: tile.bg, ...style }}>
       <div className="absolute top-0 right-0 pointer-events-none"><Checker {...CK.navy} corner="tr" /></div>
       <img ref={img} src={`/images/hero/${tile.key}.webp`} alt="" decoding="async" onLoad={() => setPhoto(true)} onError={() => setPhoto(false)}
-        className={`pl-kb absolute inset-0 w-full h-full object-cover ${photo ? "" : "hidden"}`} style={{ animationDelay: `${-(tile.key.length * 3)}s` }} />
-      {photo && <span className="absolute left-2.5 bottom-2.5 max-w-[calc(100%-20px)] truncate rounded-lg bg-[#071B43]/80 px-2.5 py-1 text-[11px] font-semibold text-white">{tile.label}</span>}
+        className={`pl-kb absolute inset-0 w-full h-full object-cover ${photo === false ? "hidden" : ""}`} style={{ animationDelay: `${-(tile.key.length * 3)}s` }} />
+      {photo !== false && <span className="absolute left-2.5 bottom-2.5 max-w-[calc(100%-20px)] truncate rounded-lg bg-[#071B43]/80 px-2.5 py-1 text-[11px] font-semibold text-white">{tile.label}</span>}
       {photo === false && <Fit w={tile.size[0]} h={tile.size[1]}><C t={t} /></Fit>}
     </div>
   );
@@ -203,9 +205,10 @@ const EntryPass = () => {
 
 export const HeroIntro = () => {
   const signup = useSignup();
-  const t = useTick(true, 2200);
+  const root = useRef(null);
+  const t = useTick(true, 2200, root); // photo tiles change only while the hero is on screen
   return (
-    <div className="relative h-full w-full">
+    <div ref={root} className="relative h-full w-full">
       <div aria-hidden="true" className="absolute top-0 left-0 pointer-events-none -scale-x-100"><Checker {...CK.heroLight} corner="tr" /></div>
 
       <div className="relative h-full mx-auto max-w-[1200px] lg:px-8 lg:grid lg:grid-cols-[minmax(0,1.08fr)_minmax(0,1fr)] lg:gap-12">

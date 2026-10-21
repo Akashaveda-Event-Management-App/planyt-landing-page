@@ -279,7 +279,7 @@ export const Faq = () => {
           <p className="relative font-display text-xl font-bold leading-snug">Tell us about your event and we'll show you how it would run.</p>
           <div className="relative flex flex-col gap-2.5">
             <TicketCta href="#contact" tone="light" className="w-full [&>span:first-child]:flex-1 [&>span:first-child]:justify-center">Talk to us</TicketCta>
-            <TicketCta to="/" tone="ghost" icon="calendar-days" className="w-full [&>span:first-child]:flex-1 [&>span:first-child]:justify-center">Browse events</TicketCta>
+            <TicketCta to="/events" tone="ghost" icon="calendar-days" className="w-full [&>span:first-child]:flex-1 [&>span:first-child]:justify-center">Browse events</TicketCta>
           </div>
         </aside>
       </div>
@@ -437,7 +437,7 @@ export const FinalCta = () => {
         <div className="relative flex gap-2.5 flex-wrap items-center">
           {signup ? <><Magnetic><TicketCta to={START_FREE}>Start free</TicketCta></Magnetic><TicketCta href="#contact" tone="outline" icon="message-circle">Talk to us</TicketCta></> : <Magnetic><TicketCta href="#contact">Request access</TicketCta></Magnetic>}
           <TicketCta to="/login" tone="outline" icon="user-check">Organizer log in</TicketCta>
-          <TicketCta to="/" tone="outline" icon="calendar-days">Browse events</TicketCta>
+          <TicketCta to="/events" tone="outline" icon="calendar-days">Browse events</TicketCta>
         </div>
       </div>
     </Band>
@@ -448,7 +448,7 @@ export const FinalCta = () => {
 
 const FOOT = [
   ["EXPLORE", [["Events", "/"], ["Website builder", "#website"], ["How it works", "#how"], ["Pricing", "#pricing"]]],
-  ["PORTALS", [["Sponsor portal", "/?sponsor=1"], ["Volunteer portal", "/?volunteer=1"], ["Sign in", "/login"]]], // the one sign-in window, opened on that view
+  ["PORTALS", [["Sponsor portal", "/sponsor-login"], ["Volunteer portal", "/volunteer/login"], ["Sign in", "/login"]]], // the one sign-in window, opened on that view
   ["COMPANY", [["Security & data", "#trust"], ["Help", "#faq"], ["Request access", "#contact"]]],
   ["LEGAL", [["Terms", "/terms"], ["Privacy", "/privacy-policy"]]],
 ];

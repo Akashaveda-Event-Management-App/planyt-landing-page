@@ -18,19 +18,16 @@ export const ScrollProgress = () => {
   return <Motion.div aria-hidden="true" className="fixed top-0 left-0 right-0 h-[3px] z-[70] origin-left bg-gradient-to-r from-[#0052C9] via-[#1565FF] to-[#6FA1FF]" style={{ scaleX }} />;
 };
 
-/** A line of words that rise into place one after another (headlines). */
+/**
+ * A line of words that rise into place one after another (headlines). Plain CSS (.pl-word), so it
+ * plays as soon as the page arrives: with JS the headline (the largest thing on screen) stayed
+ * invisible until the scripts loaded, ~2 s on a phone.
+ */
 export const WordsIn = ({ children, className = "", delay = 0, step = 0.07 }) => {
   const words = String(children).split(" ");
   return words.map((w, i) => (
     <React.Fragment key={i}>
-      <Motion.span
-        className={`inline-block ${className}`}
-        initial={{ opacity: 0, y: "0.45em", filter: "blur(8px)" }}
-        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.7, ease: EASE, delay: delay + i * step }}
-      >
-        {w}
-      </Motion.span>
+      <span className={`pl-word ${className}`} style={{ animationDelay: `${(delay + i * step).toFixed(2)}s` }}>{w}</span>
       {i < words.length - 1 && " "}
     </React.Fragment>
   ));

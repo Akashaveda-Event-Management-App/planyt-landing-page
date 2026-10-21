@@ -81,7 +81,7 @@ export const HomeNav = ({ user, dashTo, onLogout }) => {
             {NAV.map(([id, label]) => <a key={id} href={`#${id}`} aria-current={active === id ? "true" : undefined} className={`px-3 py-2 rounded-lg transition-colors ${active === id ? `pl-ticket [--n:5px] ${lt ? "bg-[#E6EEFD] text-[#0052C9]" : "bg-white/[0.12] text-white"}` : link}`}>{label}</a>)}
           </div>
           <div className="ml-auto flex items-center gap-1.5 sm:gap-3 text-sm font-medium whitespace-nowrap">
-            <span className="hidden md:block"><TicketCta to="/" size="sm" tone={lt ? "outline" : "ghost"} icon="calendar-days">Browse events</TicketCta></span>
+            <span className="hidden md:block"><TicketCta to="/events" size="sm" tone={lt ? "outline" : "ghost"} icon="calendar-days">Browse events</TicketCta></span>
             {user ? (
               <>
                 <Link to={dashTo} className={`hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold transition-colors ${cta}`}>My dashboard <ArrowRight size={15} /></Link>
@@ -124,7 +124,7 @@ export const HomeNav = ({ user, dashTo, onLogout }) => {
               <>
                 <TicketCta to="/signup" className="w-full [&>span:first-child]:flex-1 [&>span:first-child]:justify-center">Sign up</TicketCta>
                 <Link to="/login" className="h-12 rounded-xl border border-[#E4E8F0] font-semibold text-[#0B1530] inline-flex items-center justify-center">Log in</Link>
-                <TicketCta to="/" tone="outline" icon="calendar-days" className="w-full [&>span:first-child]:flex-1 [&>span:first-child]:justify-center">Browse events</TicketCta>
+                <TicketCta to="/events" tone="outline" icon="calendar-days" className="w-full [&>span:first-child]:flex-1 [&>span:first-child]:justify-center">Browse events</TicketCta>
               </>
             )}
           </div>
