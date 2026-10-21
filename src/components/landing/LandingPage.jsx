@@ -4,11 +4,14 @@
  */
 import React, { useEffect } from "react";
 import { useReveal } from "./useReveal";
+import { MotionRoot, ScrollProgress } from "./motion";
 import { HomeNav } from "./HomeNav";
 import { HeroLaptop } from "./HeroLaptop";
 import { HowItWorks } from "./HowItWorks";
 import { Features } from "./Features";
-import { Contact, DitherMarquee, Faq, FinalCta, HomeFooter, Pricing, Roles } from "./HomeSections";
+import { Partners } from "./Partners";
+import { WebsiteBuilder } from "./WebsiteBuilder";
+import { Contact, DitherMarquee, Faq, FinalCta, HomeFooter, Pricing, Roles, Trust } from "./HomeSections";
 import { APP_URL } from "./link";
 
 const LandingPage = () => {
@@ -21,15 +24,20 @@ const LandingPage = () => {
   }, []);
 
   return (
+    <MotionRoot>
     <div className="planyt-home min-h-screen bg-[#F7F8FB] text-[#0B1530] overflow-x-clip" style={{ fontFamily: "var(--font-sans)" }}>
+      <ScrollProgress />
       {/* Signed-in state lives on the app domain; the nav offers Log in there. */}
       <HomeNav user={null} dashTo={`${APP_URL}/login`} onLogout={() => {}} />
       <main>
         <HeroLaptop />
         <DitherMarquee />
+        <Partners />
+        <WebsiteBuilder />
         <HowItWorks />
         <Features />
         <Roles />
+        <Trust />
         <Pricing />
         <Faq />
         <Contact />
@@ -37,6 +45,7 @@ const LandingPage = () => {
       </main>
       <HomeFooter />
     </div>
+    </MotionRoot>
   );
 };
 

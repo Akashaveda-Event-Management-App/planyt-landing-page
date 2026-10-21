@@ -19,7 +19,7 @@ export const ROLES = {
   organizer: { label: "Organizer", a: "#1565ff", a7: "#144bb7", a1: "#e4edfe" },
   volunteer: { label: "Volunteer", a: "#6d28d9", a7: "#5b21b6", a1: "#f1ebfe" },
   reviewer: { label: "Reviewer", a: "#0d9488", a7: "#0f766e", a1: "#ccfbf1" },
-  sponsor: { label: "Sponsor", a: "#c026d3", a7: "#a21caf", a1: "#fae8ff" },
+  sponsor: { label: "Sponsor", a: "#1565ff", a7: "#144bb7", a1: "#e4edfe" }, // Planyt Blue, as the sponsor dashboard now is
 };
 const NAV = {
   attendee: [
@@ -56,7 +56,7 @@ const TITLE = {
   organizer: ["Conference on Applied AI", "12–14 Nov · Chennai Trade Centre"],
   volunteer: ["Hi Sneha, you’re on Gate 2", "Conference on Applied AI · Thursday, 12 November"],
   reviewer: ["Welcome back, Dr. Iyer", "Conference on Applied AI · Programme committee"],
-  sponsor: ["Welcome back, Northwind Labs!", "Gold Sponsor at Conference on Applied AI"],
+  sponsor: ["Dashboard", "Conference on Applied AI · 12–14 Nov · Chennai"],
 };
 
 /** Small builders shared by the home bodies. */

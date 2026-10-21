@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "./link";
 import {
-  ArrowRight, Award, BadgeCheck, BarChart3, BedDouble, Bell, Building2, CalendarCheck, CalendarClock, CalendarDays,
+  Archive, ArrowRight, LayoutTemplate, MousePointerClick, Award, BadgeCheck, BarChart3, BedDouble, Bell, Building2, CalendarCheck, CalendarClock, CalendarDays,
   Check, ChevronDown, ChevronRight, CircleCheck, ClipboardList, Clock, CreditCard, Crown, FileCheck, FileText,
-  FolderOpen, Home, Image, ListChecks, Mail, MapPin, Megaphone, MessageCircle, MessageSquare, MessageSquareText,
+  FolderOpen, Globe, Home, Image, ListChecks, Mail, MapPin, Megaphone, MessageCircle, MessageSquare, MessageSquareText,
   MessagesSquare, MonitorPlay, QrCode, RefreshCcw, ScanLine, Search, Settings, Shield, SlidersHorizontal, Star,
-  Store, Ticket, Trophy, UserCheck, UserPlus, Users, UsersRound,
+  Lock, Store, Ticket, Trophy, UserCheck, UserPlus, Users, UsersRound,
 } from "lucide-react";
 
 /** Shared bits for the /landing page: icons by name, the pixel checker corner and the dither edge. */
 
 const ICONS = {
-  "arrow-right": ArrowRight, award: Award, "badge-check": BadgeCheck, "bar-chart-3": BarChart3, "bed-double": BedDouble,
+  archive: Archive, lock: Lock, "layout-template": LayoutTemplate, "mouse-pointer-click": MousePointerClick, "arrow-right": ArrowRight, award: Award, "badge-check": BadgeCheck, "bar-chart-3": BarChart3, "bed-double": BedDouble,
   bell: Bell, "building-2": Building2, "calendar-check": CalendarCheck, "calendar-clock": CalendarClock,
   "calendar-days": CalendarDays, check: Check, "chevron-down": ChevronDown, "chevron-right": ChevronRight,
   "circle-check": CircleCheck, "clipboard-list": ClipboardList, clock: Clock, "credit-card": CreditCard, crown: Crown,
@@ -19,7 +19,7 @@ const ICONS = {
   "list-checks": ListChecks, mail: Mail, "map-pin": MapPin, megaphone: Megaphone, "message-circle": MessageCircle,
   "message-square": MessageSquare, "message-square-text": MessageSquareText, "messages-square": MessagesSquare,
   "monitor-play": MonitorPlay, "qr-code": QrCode, "refresh-ccw": RefreshCcw, "scan-line": ScanLine, search: Search,
-  settings: Settings, shield: Shield, "sliders-horizontal": SlidersHorizontal, star: Star, store: Store, ticket: Ticket,
+  globe: Globe, settings: Settings, shield: Shield, "sliders-horizontal": SlidersHorizontal, star: Star, store: Store, ticket: Ticket,
   trophy: Trophy, "user-check": UserCheck, "user-plus": UserPlus, users: Users, "users-round": UsersRound,
 };
 

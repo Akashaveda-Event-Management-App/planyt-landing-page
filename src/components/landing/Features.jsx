@@ -1,37 +1,30 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Checker, Ico, useTick } from "./kit";
+import { Checker, Ico } from "./kit";
 import { Band, SectionHead } from "./Band";
-import { EventTiles } from "./EventTiles";
-import { LIVE } from "./liveDemos";
-import { MODULES } from "./content";
+import { Barcode, EventTiles } from "./EventTiles";
+import { FEATURES } from "./content";
+import { brandLogoSrc } from "./BrandLogo";
 
 /**
- * Features (dark band).
- * Left: the nine modules; the active one opens to show its points and a progress line,
- * and the list moves on by itself every 6.5 s while the block is on screen and not hovered.
- * Right: the active module's colour panel with its live mini-UI.
+ * Features (dark band) as one big pass, styled like the entry pass in EventTiles.
+ * Main part: logo + "FEATURE PASS", kicker, the active feature's name, three labelled fields and
+ * an "In short" line with a barcode. Past the tear line, the blue stub lists every feature: click
+ * one, or let it move on every 6.5 s while on screen and not hovered. On phones the stub sits on
+ * top as a scrollable row. Copy in content.js (FEATURES).
  */
-const BP = [
-  { bg: "#0052C9", fg: "#fff", sub: "rgba(255,255,255,.8)", chip: "rgba(255,255,255,.16)", chipFg: "#fff", ck: "rgba(255,255,255,.16)" },
-  { bg: "#A2C3FF", fg: "#071B43", sub: "#14306E", chip: "rgba(255,255,255,.6)", chipFg: "#0052C9", ck: "rgba(255,255,255,.4)" },
-  { bg: "#FFFFFF", fg: "#071B43", sub: "#43506B", chip: "#E6EEFD", chipFg: "#0052C9", ck: "rgba(0,82,201,.12)" },
-  { bg: "#1A3B82", fg: "#fff", sub: "#C9D6EE", chip: "rgba(255,255,255,.12)", chipFg: "#A2C3FF", ck: "rgba(255,255,255,.1)" },
-];
+const NOTCH = "#071B43"; // band colour: the punched notches at the tear line
 const STEP = 6500;
-
-const Live = ({ i }) => {
-  const t = useTick(true);
-  return <div className="pl-fade">{LIVE[i](t)}</div>;
-};
+const pad = (n) => String(n).padStart(2, "0");
 
 export const Features = () => {
-  const [feat, setFeat] = useState(0);
+  const [cur, setCur] = useState(0);
   const [hover, setHover] = useState(false);
   const [inView, setInView] = useState(false);
   const boxRef = useRef(null);
+  const listRef = useRef(null);
 
   useEffect(() => {
-    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.25 });
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.3 });
     if (boxRef.current) io.observe(boxRef.current);
     return () => io.disconnect();
   }, []);
@@ -39,65 +32,82 @@ export const Features = () => {
   const auto = inView && !hover && !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
   useEffect(() => {
     if (!auto) return undefined;
-    const t = setTimeout(() => setFeat((f) => (f + 1) % MODULES.length), STEP);
+    const t = setTimeout(() => setCur((c) => (c + 1) % FEATURES.length), STEP);
     return () => clearTimeout(t);
-  }, [auto, feat]);
+  }, [auto, cur]);
 
-  const [name, icon, items] = MODULES[feat];
-  const p = BP[feat % 4];
+  // phones: keep the active item in view in the scrollable row
+  useEffect(() => {
+    const el = listRef.current?.children[cur];
+    if (el && window.innerWidth < 1024) el.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+  }, [cur]);
+
+  const [name, icon, line, fields] = FEATURES[cur];
 
   return (
-    <Band id="features" dark innerRef={boxRef}>
-          <SectionHead dark kicker="FEATURES" title="Everything an event needs, already connected." text="No separate form tool, review system, badge software or Q&A app. These nine modules come with every Planyt event." />
+    <Band id="features" dark>
+      <SectionHead dark kicker="FEATURES" title="Everything an event needs, already connected." text="Ten modules in every Planyt event. Nothing to stitch together." />
 
-          <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] items-start" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-            <div role="tablist" aria-label="Modules" className="flex flex-col">
-              {MODULES.map(([n, ic, pts], i) => {
-                const on = i === feat;
-                return (
-                  <div key={n} className="border-t border-white/[0.08] first:border-t-0">
-                    <button type="button" role="tab" aria-selected={on} onClick={() => setFeat(i)}
-                      className={`w-full flex items-center gap-3 py-2 px-2 rounded-xl text-left text-[15px] font-semibold transition-colors ${on ? "pl-ticket [--n:5px] bg-white/[0.07] text-white" : "text-[#8FA2C8] hover:text-white"}`}>
-                      <span className={`w-7 h-7 rounded-[9px] flex items-center justify-center flex-none transition-colors ${on ? "bg-[#0052C9]" : "bg-white/[0.06]"}`}><Ico n={ic} c={on ? "#fff" : "#8FA2C8"} s={15} /></span>
-                      <span className="flex-1">{n}</span>
-                      <span className="text-xs tabular-nums" style={{ color: on ? "#A2C3FF" : "#5F729C" }}>0{i + 1}</span>
-                    </button>
-                    <div className="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.2,.8,.2,1)]" style={{ gridTemplateRows: on ? "1fr" : "0fr" }}>
-                      <div className="overflow-hidden">
-                        <ul className="pl-11 pb-3 grid gap-1.5 text-[13.5px] text-[#C9D6EE]">
-                          {pts.map((t) => <li key={t} className="flex gap-2 items-start"><Ico n="check" c="#7FA6FF" s={13} style={{ marginTop: 3 }} />{t}</li>)}
-                        </ul>
-                        <span className="block ml-11 mb-3 h-0.5 rounded bg-white/10 overflow-hidden">
-                          {on && <span key={`${feat}${auto}`} className={`block h-full bg-[#A2C3FF] origin-left ${auto ? "pl-run" : ""}`} style={{ "--t": `${STEP}ms` }} />}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+      <div ref={boxRef} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+        className="pl-reveal mt-10 flex flex-col-reverse lg:flex-row rounded-[24px] shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)]">
 
-            <article key={feat} className="pl-fade relative overflow-hidden rounded-[20px] p-5 sm:p-7 flex flex-col gap-5 order-first lg:order-none lg:sticky lg:top-24" style={{ background: p.bg, color: p.fg }}>
-              <div className="absolute top-0 right-0 pointer-events-none"><Checker cols={9} rows={6} size={14} colors={[p.ck]} corner="tr" reach={0.85} /></div>
-              <div className="relative flex items-center gap-3">
-                <span className="w-11 h-11 rounded-[13px] flex items-center justify-center" style={{ background: p.chip }}><Ico n={icon} c={p.chipFg} s={20} /></span>
-                <div>
-                  <div className="text-[11.5px] font-bold tracking-[0.1em]" style={{ color: p.sub }}>MODULE 0{feat + 1} / 09</div>
-                  <h3 className="font-display text-xl sm:text-2xl font-extrabold tracking-[-0.03em] leading-tight">{name}</h3>
-                </div>
-                <span className="ml-auto hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold" style={{ background: p.chip }}>
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#4ADE80]" style={{ animation: "pl-blink 1.4s infinite" }} />Live preview
-                </span>
-              </div>
-              <div className="relative bg-white text-[#0B1530] rounded-[20px] p-5 min-h-[260px] border border-[rgba(7,27,67,0.06)] shadow-[0_30px_60px_-30px_rgba(7,27,67,0.55)]">
-                <Live i={feat} />
-              </div>
-              <div className="relative flex gap-1.5" aria-hidden="true">
-                {MODULES.map((m, i) => <span key={m[0]} className="h-1.5 rounded-full transition-all duration-500" style={{ flex: i === feat ? "0 0 28px" : "0 0 6px", background: i === feat ? p.fg : p.bg === "#FFFFFF" ? "rgba(7,27,67,.2)" : "rgba(255,255,255,.35)" }} />)}
-              </div>
-              <span className="sr-only">{items.join(", ")}</span>
-            </article>
+        {/* main part of the pass: the active feature */}
+        <article className="relative flex-1 min-w-0 bg-white text-[#0B1530] rounded-b-[24px] lg:rounded-r-none lg:rounded-l-[24px] p-6 sm:p-9 flex flex-col">
+          <div className="flex items-center gap-2">
+            <img src={brandLogoSrc("horizontal", "light")} alt="Planyt" className="h-6 w-auto" />
+            <span className="ml-auto text-[12px] font-bold tracking-[0.16em] text-[#0052C9]">FEATURE PASS</span>
           </div>
+
+          <div key={cur} className="pl-fade flex-1 flex flex-col">
+            <p className="mt-7 sm:mt-8 flex items-center gap-2 text-[12px] font-semibold tracking-[0.14em] text-[#6B7690]">
+              <span className="w-7 h-7 rounded-[9px] bg-[#E6EEFD] flex items-center justify-center"><Ico n={icon} c="#0052C9" s={15} /></span>
+              MODULE {pad(cur + 1)} / {pad(FEATURES.length)} · INCLUDED
+            </p>
+            <h3 className="mt-3 font-display font-extrabold tracking-[-0.03em] leading-[1.05] text-[clamp(30px,3.6vw,46px)] [text-wrap:balance]">{name}</h3>
+
+            <dl className="mt-7 sm:mt-8 grid grid-cols-3 gap-4 max-w-[560px]">
+              {fields.map(([k, v]) => (
+                <div key={k}><dt className="text-[12px] text-[#6B7690]">{k}</dt><dd className="mt-0.5 text-[15px] sm:text-[17px] font-bold leading-tight">{v}</dd></div>
+              ))}
+            </dl>
+
+            <div className="mt-auto pt-8 flex items-end justify-between gap-6">
+              <div className="min-w-0"><p className="text-[12px] text-[#6B7690]">In short</p><p className="mt-0.5 text-[15px] sm:text-[16px] font-semibold leading-snug [text-wrap:pretty]">{line}</p></div>
+              <Barcode />
+            </div>
+          </div>
+        </article>
+
+        {/* tear line with punched notches (vertical on desktop, horizontal on phones) */}
+        <div aria-hidden="true" className="relative z-10 flex-none h-0 lg:h-auto lg:w-0">
+          <span className="absolute -top-3 -left-3 w-6 h-6 rounded-full" style={{ background: NOTCH }} />
+          <span className="absolute -top-3 -right-3 lg:right-auto lg:top-auto lg:-bottom-3 lg:-left-3 w-6 h-6 rounded-full" style={{ background: NOTCH }} />
+          <span className="absolute left-5 right-5 top-0 border-t-2 lg:border-t-0 lg:left-0 lg:right-auto lg:top-5 lg:bottom-5 lg:border-l-2 border-dashed border-[#C9D6EE]" />
+        </div>
+
+        {/* stub: every feature */}
+        <div className="relative lg:w-[290px] flex-none bg-[#0052C9] text-white rounded-t-[24px] lg:rounded-tl-none lg:rounded-r-[24px] p-4 sm:p-5 flex flex-col overflow-hidden">
+          <div className="absolute top-0 right-0 pointer-events-none"><Checker cols={8} rows={5} size={12} colors={["#1565FF", "#2D74E0"]} corner="tr" /></div>
+          <p className="relative text-center text-[12px] font-bold tracking-[0.16em] text-[#DCE7FD]">ALL FEATURES</p>
+          <div ref={listRef} role="tablist" aria-label="Features"
+            className="relative mt-3 flex lg:flex-col gap-0.5 overflow-x-auto lg:overflow-visible -mx-1 px-1 pb-1 [scrollbar-width:none]">
+            {FEATURES.map(([n, ic], i) => {
+              const on = i === cur;
+              return (
+                <button key={n} type="button" role="tab" aria-selected={on} onClick={() => setCur(i)}
+                  className={`relative flex-none lg:w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-left text-[13.5px] font-semibold transition-colors overflow-hidden ${on ? "bg-white text-[#071B43]" : "text-[#DCE7FD] hover:bg-white/10"}`}>
+                  <span className={`w-6 h-6 rounded-[8px] flex items-center justify-center flex-none ${on ? "bg-[#0052C9]" : "bg-white/15"}`}><Ico n={ic} c="#fff" s={13} /></span>
+                  <span className="whitespace-nowrap lg:whitespace-normal lg:flex-1">{n}</span>
+                  <span className={`hidden lg:inline text-xs tabular-nums ${on ? "text-[#0052C9]" : "text-[#A2C3FF]"}`}>{pad(i + 1)}</span>
+                  {on && <span key={`${cur}${auto}`} aria-hidden="true" className={`absolute left-0 bottom-0 h-0.5 w-full bg-[#0052C9] origin-left ${auto ? "pl-run" : "scale-x-0"}`} style={{ "--t": `${STEP}ms` }} />}
+                </button>
+              );
+            })}
+          </div>
+          <p className="relative hidden lg:block mt-auto pt-3 text-center text-[12px] font-semibold text-[#DCE7FD] tabular-nums">No. {pad(cur + 1)} of {pad(FEATURES.length)}</p>
+        </div>
+      </div>
+
       <EventTiles />
     </Band>
   );

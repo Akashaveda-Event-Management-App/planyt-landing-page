@@ -8,7 +8,7 @@ import { brandLogoSrc } from "./BrandLogo";
  */
 const NOTCH = "#071B43"; // band colour, used for the ticket's punched notches
 
-const Barcode = () => (
+export const Barcode = () => (
   <div aria-hidden="true" className="hidden sm:flex items-end gap-[2px] h-8">
     {Array.from({ length: 42 }, (_, i) => <span key={i} className="bg-[#0B1530]" style={{ width: (i * 7) % 3 === 0 ? 3 : 1.5, height: i % 9 === 0 ? "100%" : "82%" }} />)}
   </div>

@@ -93,7 +93,7 @@ export const HeroLaptop = () => {
   const roleChips = DR.map((k, i) => ({ label: ROLES[k].label, dot: ROLES[k].a, on: i === st.role, pick: () => jump(0.2 + (i + 0.5) * 0.154) }));
 
   return (
-    <header id="top" data-dark="1" ref={heroRef} className="relative bg-[#071B43] text-white" style={{ height: wide ? "440vh" : "380vh" }}>
+    <header id="top" data-dark="1" ref={heroRef} className="relative bg-[#071B43] text-white" style={{ height: wide ? "320vh" : "280vh" }}>
             <div className="sticky top-0 h-screen overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(1000px 560px at 50% 82%,rgba(0,82,201,.5),transparent 70%)" }} />
         <div className="absolute top-0 right-0 pointer-events-none"><Checker {...CK.hero} corner="tr" /></div>
@@ -101,7 +101,8 @@ export const HeroLaptop = () => {
 
         {/* captions */}
         <div className="absolute inset-x-0 top-0 z-[4] px-6 flex justify-center pointer-events-none" style={{ paddingTop: "clamp(80px,10vh,96px)" }}>
-          <div ref={introRef} className="absolute inset-x-0 top-0 h-screen px-6 pt-16 flex flex-col items-center justify-center text-center pointer-events-auto">
+          {/* light intro over the navy band; data-dark="0" tells the nav it's on a light background */}
+          <div ref={introRef} data-dark="0" className="absolute inset-x-0 top-0 h-screen bg-[#F9FAFC] text-[#111826] pointer-events-auto">
             <HeroIntro />
           </div>
 
