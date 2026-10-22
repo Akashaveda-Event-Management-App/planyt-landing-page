@@ -9,7 +9,7 @@ import { Checker, TicketCta } from "./kit";
  * frosted white over light ones (whatever sits under the bar decides: [data-dark]).
  * Also owns the back-to-top button with its scroll-progress ring.
  */
-const NAV = [["how", "How it works"], ["website", "Website"], ["features", "Features"], ["roles", "Roles"], ["pricing", "Pricing"], ["faq", "FAQ"], ["contact", "Contact"]];
+const NAV = [["why", "Why Planyt"], ["before", "Before"], ["day", "On the day"], ["after", "After"], ["partners", "Proof"], ["pricing", "Pricing"], ["faq", "FAQ"], ["contact", "Contact"]];
 
 const useNavState = (progRef, ringRef) => {
   const [s, setS] = useState({ scrolled: false, light: false, top: false });

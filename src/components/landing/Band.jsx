@@ -13,7 +13,7 @@ export const THEME = {
 
 export const Band = ({ id, dark = false, tight = false, children, onMouseEnter, onMouseLeave, innerRef }) => (
   <section id={id} ref={innerRef} data-dark={dark ? "1" : undefined} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}
-    className={`relative overflow-hidden scroll-mt-16 ${THEME[dark ? "dark" : "light"].band}`}>
+    className={`relative overflow-clip scroll-mt-16 ${THEME[dark ? "dark" : "light"].band}`}>
     <div className="absolute top-0 right-0 pointer-events-none"><Checker {...CK[dark ? "hero" : "heroLight"]} corner="tr" /></div>
     <div className={`relative max-w-[1200px] mx-auto px-4 sm:px-8 ${tight ? "pt-10 sm:pt-12" : "pt-16 sm:pt-20"} pb-16 sm:pb-20`}>{children}</div>
   </section>

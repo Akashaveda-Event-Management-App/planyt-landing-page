@@ -3,42 +3,18 @@ import { Link } from "./link";
 import { BadgeCheck, Mail, Plus, Users } from "lucide-react";
 import { Checker, CK, Dither, FakeQr, Ico, TicketCta } from "./kit";
 import { Band, SectionHead, THEME } from "./Band";
-import { CONTACT_EMAIL, EVENT_TYPES, FAQS, ROLE_CARDS, TRUST } from "./content";
+import { BADGE_TEMPLATES, CONTACT_EMAIL, FAQS, ROLE_CARDS, TRUST } from "./content";
 import { leadsUrl } from "./api";
 import { START_FREE, planSummary, useSignup } from "./signup";
 import { brandLogoSrc } from "./BrandLogo";
-import { Barcode } from "./EventTiles";
 import { Magnetic, Rise, Stagger } from "./motion";
 
 /**
- * /landing sections after the hero. Bands alternate: marquee + How it works (light, HowItWorks.jsx),
- * Features (dark, Features.jsx), Roles (light), Pricing (dark), FAQ (light), Contact (dark),
- * closing call to action (light), footer (dark).
+ * /landing sections after the story chapters: Roles (light), proof (Partners.jsx + Trust, light),
+ * Pricing (dark), FAQ (light), Contact (dark), footer (dark).
  */
 const L = THEME.light, D = THEME.dark;
 const Corner = ({ k }) => <div className="absolute top-0 right-0 pointer-events-none"><Checker {...CK[k]} corner="tr" /></div>;
-
-export const DitherMarquee = () => {
-  const pix = (
-    <span className="inline-grid grid-cols-[repeat(2,7px)] flex-none">
-      {[1, 0, 0, 1].map((v, i) => <span key={i} className="w-[7px] h-[7px]" style={{ background: v ? "#0052C9" : "transparent" }} />)}
-    </span>
-  );
-  const run = EVENT_TYPES.map((t) => <span key={t} className="inline-flex items-center gap-10 pr-10"><span>{t}</span>{pix}</span>);
-  const fade = "linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)";
-  return (
-    <div className="bg-[#F7F8FB]">
-      <div aria-hidden="true" className="relative h-[72px] -mt-px overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 flex justify-center"><Dither /></div>
-      </div>
-      <div aria-label={EVENT_TYPES.join(", ")} className="relative overflow-hidden pt-9 pb-2" style={{ maskImage: fade, WebkitMaskImage: fade }}>
-        <div aria-hidden="true" className="pl-marquee flex w-max whitespace-nowrap font-display font-bold tracking-[-0.03em] text-[#0B1530]" style={{ fontSize: "clamp(28px,3.2vw,44px)" }}>
-          <div className="flex">{run}</div><div className="flex">{run}</div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 /* ── Roles (light) ─────────────────────────────────────────────────────── */
 
@@ -84,6 +60,37 @@ const RoleBadge = ({ r, b, i, on, onPick }) => (
   </button>
 );
 
+/**
+ * Every Badge Studio template as a printed badge, drifting sideways without end (pauses on hover;
+ * still for reduced motion). Images in public/images/landing/badges, list in content.js.
+ */
+const BADGE_CSS = `
+@keyframes pl-badges { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.pl-badges { animation: pl-badges 110s linear infinite; }
+.pl-badges-wrap:hover .pl-badges { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .pl-badges { animation: none; } }
+`;
+const BadgeMarquee = () => (
+  <div className="pl-reveal mt-6">
+    <style>{BADGE_CSS}</style>
+    <div className="flex flex-wrap items-end justify-between gap-3">
+      <p className="font-display text-[20px] sm:text-[22px] font-bold tracking-[-0.02em] text-[#0B1530]">{BADGE_TEMPLATES.length} badge designs, printed from the registration list.</p>
+      <p className="text-[14px] text-[#5B6680]">Pick one, change anything, print in bulk or at the desk.</p>
+    </div>
+    <div className="pl-badges-wrap mt-5 relative left-1/2 w-screen -translate-x-1/2 overflow-hidden" style={{ maskImage: "linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)", WebkitMaskImage: "linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)" }}>
+      <ul className="pl-badges m-0 p-0 list-none flex w-max gap-5 py-4">
+        {[...BADGE_TEMPLATES, ...BADGE_TEMPLATES].map(([id, name, cat], i) => (
+          <li key={`${id}-${i}`} aria-hidden={i >= BADGE_TEMPLATES.length || undefined} className="flex-none w-[150px] sm:w-[176px]">
+            <img src={`/images/landing/badges/${id}.webp`} alt={i < BADGE_TEMPLATES.length ? `${name} badge template` : ""} width={600} height={900} loading="lazy" decoding="async"
+              className="block w-full h-auto rounded-[12px] shadow-[0_18px_34px_-18px_rgba(7,27,67,0.55)] transition-transform duration-300 hover:-translate-y-1.5" />
+            <p className="mt-2.5 px-0.5 text-[12.5px] text-[#5B6680]"><strong className="text-[#0B1530] font-semibold">{name}</strong> · {cat}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+);
+
 export const Roles = () => {
   const [role, setRole] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -92,7 +99,6 @@ export const Roles = () => {
     const t = setTimeout(() => setRole((r) => (r + 1) % ROLE_CARDS.length), 7000);
     return () => clearTimeout(t);
   }, [role, paused]);
-  const rd = ROLE_CARDS[role], b = BADGE[role];
   return (
     <Band id="roles">
       <SectionHead kicker="EVERYONE AT THE EVENT" title="A badge, and a screen, for every role." text="Volunteers don't need revenue and reviewers don't need the registration list. Each role signs in to a screen built for its job." />
@@ -101,47 +107,8 @@ export const Roles = () => {
           {ROLE_CARDS.map((r, i) => <RoleBadge key={r.name} r={r} b={BADGE[i]} i={i} on={i === role} onPick={() => setRole(i)} />)}
         </div>
 
-        {/* role pass, laid out like the entry pass: main part | tear line | stub in the role colour.
-            It stays mounted at a fixed height; only the text fades when the role changes. */}
-        <div className="mt-2 flex flex-col lg:flex-row lg:h-[352px] rounded-[22px] drop-shadow-[0_26px_40px_rgba(7,27,67,0.18)]">
-          <div className="pl-cut-main relative flex-1 min-w-0 overflow-hidden bg-white rounded-t-[22px] lg:rounded-tr-none lg:rounded-l-[22px] p-6 sm:p-8 flex flex-col min-h-[470px] sm:min-h-[360px] lg:min-h-0">
-            <div aria-hidden="true" className="absolute bottom-0 left-0 pointer-events-none"><Checker cols={10} rows={5} size={14} colors={["#CBDDFE", "#B8CEF8", "#DCE7FD"]} corner="bl" reach={0.85} /></div>
-            <div className="relative flex items-center gap-2">
-              <img src={brandLogoSrc("horizontal", "light")} alt="Planyt" className="h-5 w-auto" />
-              <span className="ml-auto text-[11.5px] font-bold tracking-[0.16em] transition-colors duration-500" style={{ color: b.fg }}>ROLE PASS</span>
-            </div>
-            <div key={role} className="pl-fade relative flex-1 flex flex-col">
-              <p className="mt-5 text-[11.5px] font-semibold tracking-[0.14em] text-[#6B7690] uppercase">{rd.who} · Admit one</p>
-              <h3 className="mt-1 font-display font-extrabold tracking-[-0.03em] leading-[1.05] text-[clamp(26px,2.8vw,34px)] text-[#0B1530]">{rd.name}</h3>
-              <dl className="mt-5 grid grid-cols-3 gap-4 max-w-[520px]">
-                {rd.pass.map(([k, v]) => (
-                  <div key={k}><dt className="text-[11.5px] text-[#6B7690]">{k}</dt><dd className="mt-0.5 text-[15px] font-bold leading-tight text-[#0B1530]">{v}</dd></div>
-                ))}
-              </dl>
-              <div className="mt-auto pt-5 flex items-end justify-between gap-5">
-                <div className="min-w-0">
-                  <p className="text-[11.5px] text-[#6B7690]">What they see</p>
-                  <ul className="mt-1.5 flex flex-wrap gap-1.5 max-w-[560px]">
-                    {rd.see.map((t) => <li key={t} className="text-[12.5px] font-semibold px-2.5 py-1 rounded-full" style={{ background: b.soft, color: b.fg }}>{t}</li>)}
-                  </ul>
-                </div>
-                <span className="hidden xl:block flex-none"><Barcode /></span>
-              </div>
-            </div>
-          </div>
-
-          <div aria-hidden="true" className="relative z-10 flex-none h-0 lg:h-auto lg:w-0">
-            <span className="absolute left-5 right-5 top-0 border-t-2 lg:border-t-0 lg:left-0 lg:right-auto lg:top-5 lg:bottom-5 lg:border-l-2 border-dashed border-[#C9D6EE]" />
-          </div>
-
-          <div className="pl-cut-stub relative lg:w-[220px] flex-none overflow-hidden text-white rounded-b-[22px] lg:rounded-bl-none lg:rounded-r-[22px] p-5 flex lg:flex-col items-center justify-between gap-4 transition-colors duration-500" style={{ background: b.c }}>
-            <div aria-hidden="true" className="absolute top-0 right-0 pointer-events-none"><Checker cols={7} rows={5} size={12} colors={["rgba(255,255,255,.16)", "rgba(255,255,255,.08)"]} corner="tr" reach={0.85} /></div>
-            <p className="relative text-[11.5px] font-bold tracking-[0.18em] text-white/85">{b.label}</p>
-            <span className="relative rounded-xl bg-white p-2.5"><FakeQr size={84} ink="#0B1530" /></span>
-            <p className="relative text-[11.5px] font-semibold text-white/85 tabular-nums">No. {String(role + 1).padStart(2, "0")}</p>
-          </div>
-        </div>
       </div>
+      <BadgeMarquee />
     </Band>
   );
 };
@@ -232,24 +199,29 @@ export const Pricing = () => {
 /* ── FAQ (light) ───────────────────────────────────────────────────────── */
 
 /** One ticket-white list; questions open in place (native <details>), dashed tear lines between them. */
-/* ── Security & data (light, right after Roles) ───────────────────────── */
+/* ── Security & data (inside the proof section, under Partners) ──────── */
 
 export const Trust = () => (
-  <Band id="trust">
-    <SectionHead kicker="SECURITY & DATA" title="Your event, your money, your data." text="What Planyt does to keep the event, its people and its payments safe." />
-    <Stagger className="mt-8 sm:mt-10 grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {TRUST.map(([icon, title, text]) => (
-        // Phones: icon beside the text, so six points stay short. Wider: icon on top.
-        <Rise key={title} spot="rgba(21,101,255,0.10)" className="relative overflow-hidden rounded-[20px] bg-white border border-[#E4E8F0] p-4 sm:p-6 flex gap-4 sm:block transition-colors hover:border-[#CBDDFE]">
-          <span className="flex-none inline-flex w-10 h-10 rounded-xl bg-[#E6EEFD] items-center justify-center"><Ico n={icon} c="#0052C9" s={18} /></span>
-          <div>
-            <h3 className="sm:mt-4 font-display text-[16px] sm:text-[17px] font-bold leading-snug text-[#0B1530]">{title}</h3>
-            <p className="mt-1 sm:mt-2 text-[14px] sm:text-[14.5px] leading-relaxed text-[#5B6680]">{text}</p>
-          </div>
-        </Rise>
-      ))}
+  <div id="trust" className="mt-14 scroll-mt-24">
+    <p className="pl-reveal text-xs font-semibold tracking-[0.16em] text-[#0052C9]">SAFE BY DESIGN</p>
+    <h3 className="pl-reveal mt-2 font-display font-bold tracking-[-0.03em] text-[#0B1530] text-[clamp(24px,2.4vw,30px)]">Your event, your money, your data.</h3>
+    <Stagger className="mt-6 grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-3">
+      {TRUST.map(([icon, title, text], i) => {
+        const lead = i === 0;
+        return (
+          <Rise key={title} spot={lead ? "rgba(255,255,255,0.18)" : "rgba(21,101,255,0.10)"}
+            className={`group relative overflow-hidden rounded-[22px] p-5 sm:p-7 flex flex-col gap-6 sm:gap-10 transition-all duration-300 hover:-translate-y-1 ${lead ? "bg-[#0052C9] text-white" : "bg-white border border-[#E4E8F0] hover:border-[#CBDDFE] hover:shadow-[0_24px_40px_-28px_rgba(7,27,67,0.45)]"}`}>
+            <div aria-hidden="true" className="absolute top-0 right-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"><Checker cols={6} rows={4} size={11} colors={lead ? ["rgba(255,255,255,.18)", "rgba(255,255,255,.08)"] : ["#DCE7FD", "#E6EEFD"]} corner="tr" reach={0.85} /></div>
+            <span className={`relative inline-flex w-11 h-11 rounded-2xl items-center justify-center ${lead ? "bg-white/15" : "bg-[#E6EEFD]"}`}><Ico n={icon} c={lead ? "#fff" : "#0052C9"} s={20} /></span>
+            <div className="relative">
+              <h3 className={`font-display font-extrabold tracking-[-0.03em] leading-[1.05] text-[22px] sm:text-[28px] ${lead ? "text-white" : "text-[#0B1530]"}`}>{title}</h3>
+              <p className={`mt-2 text-[13.5px] sm:text-[14.5px] leading-snug ${lead ? "text-white/85" : "text-[#5B6680]"}`}>{text}</p>
+            </div>
+          </Rise>
+        );
+      })}
     </Stagger>
-  </Band>
+  </div>
 );
 
 export const Faq = () => {
@@ -289,27 +261,36 @@ export const Faq = () => {
 
 /* ── Contact (dark) ────────────────────────────────────────────────────── */
 
-const field = "font-normal text-[15px] px-3.5 py-[13px] border border-[#E1E6EE] rounded-xl bg-[#FAFBFD] outline-none focus:border-[#0052C9] focus:bg-white focus:shadow-[0_0_0_4px_rgba(0,82,201,0.1)] transition";
+// Fields printed like the details on a pass: a small spaced-out label over a line you write on.
+const field = "w-full bg-transparent border-0 border-b-2 border-dashed border-[#D5DCE8] rounded-none px-0 pt-1 pb-2 font-display text-[18px] font-semibold text-[#0B1530] placeholder:text-[#B5BED0] placeholder:font-normal outline-none focus:border-solid focus:border-[#0052C9] transition-colors";
+const LABEL = "flex flex-col gap-1.5 text-[11px] font-bold tracking-[0.16em] uppercase text-[#6B7690]";
 const SIZES = ["Under 100", "100–200", "200–500", "500–1,000", "1,000+", "Not sure yet"];
 
-/** The form's fields; `values` renders a read-only copy (the half that tears away after sending). */
 const ContactFields = ({ values }) => {
   const ro = values ? { readOnly: true, tabIndex: -1 } : {};
   const v = (k) => (values ? { defaultValue: values[k] || "" } : {});
   return (
     <>
-      <label className="relative flex flex-col gap-2">Your name<input name="name" required maxLength={120} autoComplete="name" className={field} {...v("name")} {...ro} /></label>
-      <label className="relative flex flex-col gap-2">Email<input name="email" type="email" required maxLength={200} autoComplete="email" className={field} {...v("email")} {...ro} /></label>
-      <label className="flex flex-col gap-2">Event name<input name="event" maxLength={200} className={field} {...v("event")} {...ro} /></label>
-      <label className="flex flex-col gap-2">Expected attendees
-        <select name="size" defaultValue={values?.size || "200–500"} disabled={!!values} className={field}>{SIZES.map((o) => <option key={o}>{o}</option>)}</select>
-      </label>
-      <label className="col-span-full flex flex-col gap-2">What do you need?<textarea name="need" rows={5} maxLength={4000} placeholder="Dates and city, papers, sponsors, check-in desks…" className={`${field} resize-y`} {...v("need")} {...ro} /></label>
+      <label className={LABEL}>Your name<input name="name" required maxLength={120} autoComplete="name" placeholder="Aisha Khan" className={field} {...v("name")} {...ro} /></label>
+      <label className={LABEL}>Email<input name="email" type="email" required maxLength={200} autoComplete="email" placeholder="you@institute.edu" className={field} {...v("email")} {...ro} /></label>
+      <label className={`${LABEL} sm:col-span-2`}>Event name<input name="event" maxLength={200} placeholder="International Conference on…" className={field} {...v("event")} {...ro} /></label>
+      <fieldset className="sm:col-span-2 m-0 p-0 border-0">
+        <legend className={`${LABEL} mb-2.5`}>Expected attendees</legend>
+        <div className="flex flex-wrap gap-2">
+          {SIZES.map((o) => (
+            <label key={o} className="cursor-pointer">
+              <input type="radio" name="size" value={o} defaultChecked={(values?.size || "200–500") === o} disabled={!!values} className="peer sr-only" />
+              <span className="inline-flex h-9 px-3.5 items-center rounded-full border border-dashed border-[#C9D3E3] text-[13.5px] font-semibold text-[#43506B] transition-colors peer-checked:border-solid peer-checked:border-[#0052C9] peer-checked:bg-[#0052C9] peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-[#0052C9]/40 hover:border-[#0052C9]">{o}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <label className={`${LABEL} sm:col-span-2`}>What do you need?<textarea name="need" rows={3} maxLength={4000} placeholder="Dates and city, papers, sponsors, check-in desks…" className={`${field} resize-none text-[16px] font-medium leading-relaxed`} {...v("need")} {...ro} /></label>
     </>
   );
 };
 
-const FORM_PART = "pl-cut-stub bg-white text-[#1F2A44] rounded-b-[22px] lg:rounded-bl-none lg:rounded-r-[22px] p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 gap-[18px] text-sm font-medium content-start";
+const FORM_PART = "pl-cut-stub bg-white text-[#1F2A44] rounded-b-[22px] lg:rounded-bl-none lg:rounded-r-[22px] p-6 sm:p-9 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-7 text-sm font-medium content-start";
 
 /**
  * Contact as one ticket: the blue stub (left) carries the pitch, the white main part (right) is the
@@ -416,28 +397,6 @@ export const Contact = () => {
               </div>
             </form>
           )}
-        </div>
-      </div>
-    </Band>
-  );
-};
-
-/* ── Closing call to action (light) ────────────────────────────────────── */
-
-export const FinalCta = () => {
-  const signup = useSignup();
-  return (
-    <Band>
-      <div className={`pl-reveal relative overflow-hidden rounded-[20px] px-6 py-10 sm:px-12 sm:py-12 flex flex-wrap gap-8 items-center justify-between ${L.card}`}>
-        <div className="absolute top-0 right-0 bottom-0 flex items-start pointer-events-none"><Checker {...CK.cta} corner="tr" /></div>
-        <div className="relative max-w-[620px]">
-          <h2 className="font-display font-bold leading-[1.12] tracking-[-0.03em] text-[#0B1530] [text-wrap:balance]" style={{ fontSize: "clamp(28px,3.2vw,40px)" }}>Set up your next event this week.</h2>
-          <p className={`mt-4 text-base leading-relaxed ${L.text}`}>{signup ? "Sign up free and set up your first event today. Running something bigger? Talk to us." : "Tell us about your event. We send a quote, set up your organizer account and share the login."}</p>
-        </div>
-        <div className="relative flex gap-2.5 flex-wrap items-center">
-          {signup ? <><Magnetic><TicketCta to={START_FREE}>Start free</TicketCta></Magnetic><TicketCta href="#contact" tone="outline" icon="message-circle">Talk to us</TicketCta></> : <Magnetic><TicketCta href="#contact">Request access</TicketCta></Magnetic>}
-          <TicketCta to="/login" tone="outline" icon="user-check">Organizer log in</TicketCta>
-          <TicketCta to="/events" tone="outline" icon="calendar-days">Browse events</TicketCta>
         </div>
       </div>
     </Band>

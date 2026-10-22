@@ -23,11 +23,11 @@ const Meta = ({ e, dark }) => (
   </div>
 );
 
-export const Partners = () => {
+export const Partners = ({ children }) => {
   const [featured, ...rest] = PAST_EVENTS;
   return (
     <Band id="partners">
-      <SectionHead kicker="PARTNERS & PAST EVENTS" title="Trusted to run ISRO's international space conference." text="Organisers we have run events with, and the events themselves." />
+      <SectionHead kicker="PROOF" title="Trusted to run ISRO's international space conference." text="Organisers we have run events with, and the events themselves." />
 
       <ul aria-label="Organisers" className="pl-reveal mt-8 grid grid-cols-2 lg:grid-cols-4 gap-3">
         {PARTNERS.map((p) => <Logo key={p.name} p={p} />)}
@@ -66,6 +66,7 @@ export const Partners = () => {
           ))}
         </div>
       )}
+      {children}
     </Band>
   );
 };
