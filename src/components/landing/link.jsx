@@ -5,7 +5,7 @@ import React from "react";
  * belongs to the Planyt app, so it goes to APP_URL (override with VITE_APP_URL).
  */
 export const APP_URL = (import.meta.env.VITE_APP_URL || "https://app.planyt.in").replace(/\/$/, "");
-const LOCAL = new Set(["/terms", "/privacy-policy"]);
+const LOCAL = new Set(["/", "/terms", "/privacy-policy"]);
 
 export const appHref = (to = "/") => (LOCAL.has(to) || to.startsWith("#") ? to : `${APP_URL}${to}`);
 

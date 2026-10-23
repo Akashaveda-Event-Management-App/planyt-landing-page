@@ -2,19 +2,25 @@
 
 export const CONTACT_EMAIL = "contact@planyt.in";
 
+/** Badge spotlight: each role's sign-in and reach, three things they see, and the badge design they wear. */
 export const ROLE_CARDS = [
-  { name: "Organizer", pass: [["Signs in", "Shared login"], ["Sees", "Whole event"], ["Kept out", "Nothing"]], access: "Login shared by Planyt once your plan is agreed.", icon: "sliders-horizontal", who: "You and your committee", desc: "One dashboard per event with everything: registrations, money, papers, agenda, sponsors, volunteers and certificates.", see: ["Live registrations and revenue", "Payment approvals", "Papers, reviews and decisions", "Agenda, halls and live sessions", "Sponsors, volunteers and certificates"], kept: "Nothing. Organizers see the whole event." },
-  { name: "Volunteer", pass: [["Signs in", "Access key"], ["Sees", "Desk & tasks"], ["Kept out", "Revenue, reviews"]], access: "Volunteer portal, with their email and the access key you give them.", icon: "user-check", who: "Desk and hall volunteers", desc: "Their tasks for the day, the hall they are assigned to, and the desk scanner.", see: ["Volunteer tasks per hall", "Desk scanner with duplicate alerts", "Walk-in registration on the spot", "Access windows for event staff"], kept: "Revenue, payments and paper reviews." },
-  { name: "Reviewer", pass: [["Signs in", "Invite link"], ["Sees", "Assigned papers"], ["Kept out", "Author names"]], access: "An invite link from the organizer.", icon: "circle-check", who: "Your review committee", desc: "The papers assigned to them, a scoring form and a place to leave comments.", see: ["Assigned abstracts and full papers", "Scores and comments per paper", "Revision rounds"], kept: "Author names during blind review, and the registration list." },
-  { name: "Sponsor", pass: [["Signs in", "Sponsor portal"], ["Sees", "Team & stall"], ["Kept out", "Attendee data"]], access: "Registers on the event page, then uses the sponsor portal once approved.", icon: "store", who: "Partners and exhibitors", desc: "A portal for their team, their stall and their brand material.", see: ["Team passes", "Stall on the floor plan", "Gallery and brochures", "Sponsored banners and announcements"], kept: "Attendee data, revenue and papers." },
-  { name: "Attendee & author", pass: [["Signs in", "At registration"], ["Sees", "Pass & agenda"], ["Kept out", "Others' details"]], access: "Signs up while registering for the event.", icon: "users", who: "Everyone who registers", desc: "Their pass, the agenda, their paper status and their certificate.", see: ["One QR pass", "Agenda and live sessions", "Session Q&A and polls", "Paper status and certificates"], kept: "Other attendees' details and everything organizers manage." },
+  { name: "Organizer", tpl: "academic", pass: [["Signs in", "Shared login"], ["Sees", "Whole event"], ["Kept out", "Nothing"]], desc: "The whole event in one dashboard, from first registration to certificates.", see: ["Registrations & revenue", "Papers & reviews", "Agenda & check-in"] },
+  { name: "Volunteer", tpl: "photo-hero", pass: [["Signs in", "One-tap link"], ["Sees", "Desk & tasks"], ["Kept out", "Revenue, reviews"]], desc: "Their desk, their hall and the scanner, only for the hours you choose.", see: ["Desk scanner", "Walk-in registration", "Hall tasks"] },
+  { name: "Reviewer", tpl: "signature", pass: [["Signs in", "Invite link"], ["Sees", "Assigned papers"], ["Kept out", "Author names"]], desc: "The papers assigned to them, a scoring form and room for comments.", see: ["Assigned papers", "Scores & comments", "Revision rounds"] },
+  { name: "Sponsor", tpl: "corporate-split", pass: [["Signs in", "Sponsor portal"], ["Sees", "Team & stall"], ["Kept out", "Attendee data"]], desc: "A portal for their team, their stall and their brand material.", see: ["Team passes", "Stall on the floor plan", "Brochures & banners"] },
+  { name: "Attendee & author", tpl: "diagonal", pass: [["Signs in", "At registration"], ["Sees", "Pass & agenda"], ["Kept out", "Others' details"]], desc: "Their pass, the agenda, their paper's progress and their certificate.", see: ["One QR pass", "Live Q&A & polls", "Paper status"] },
 ];
 
 export const FAQS = [
   ["How do I get an organizer account?", "Write to us with your event details. Once the quote is agreed, Planyt sets up your account and shares the login."],
   ["How is pricing decided?", "By event size, the modules you need and how many events you run a year."],
-  ["Where does the ticket money go?", "Straight to your own Razorpay account. Bank and UPI receipts are approved by you."],
-  ["Do attendees need to install an app?", "No. Their pass, the agenda, Q&A and polls open in the browser."],
+  ["Where does the ticket money go?", "Straight to your own Razorpay account. Bank and UPI receipts are approved by you, and GST invoices go out on their own."],
+  ["Do attendees or volunteers need to install an app?", "No. Passes, the agenda, Q&A, polls and the volunteer scanner all open in the browser."],
+  ["What if the internet drops at the venue?", "Check-in keeps scanning offline, still catches duplicates, and syncs when the network is back."],
+  ["Can the event website use our own domain?", "Yes. Every site gets its own planyt.in address, and you can connect your own domain."],
+  ["Who sends the emails?", "Planyt sends them for your event, signed off with your event's name. Replies go to your contact email, and only people in your event receive them."],
+  ["Can people check a certificate is genuine?", "Yes. Every certificate has its own ID and a verify link."],
+  ["Can we export our data?", "Yes. Export the whole event any time. Attendees can download or delete their own data."],
   ["Can I run more than one event?", "Yes. Each event gets its own dashboard; ask us for a yearly quote."],
 ];
 
@@ -26,21 +32,6 @@ export const TRUST = [
   ["user-check", "DPDP ready", "Attendees can download or delete their data."],
   ["lock", "Hardened sign-in", "Hashed passwords, rate limits, one-tap links."],
   ["archive", "Full backup", "Export the whole event, any time."],
-];
-
-/**
- * Website builder (src/sites): the template shown beside each step. Bold templates in their real
- * colours, fonts and hero copy (src/sites/kit/templates.js).
- */
-export const WEBSITE_LOOKS = [
-  { name: "Signal", url: "devsummit.in", category: "Tech summit", bg: "#0B0C07", fg: "#F2F4F7", muted: "#9AA6B2", accent: "#C6F432", accent2: "#FF5C8A", onAccent: "#0B0C07", card: "#14161C", line: "#232C36", font: "'Space Grotesk', system-ui, sans-serif",
-    short: "DEVSUMMIT", badge: "Developer summit", tag: "2027", title: "Build what ships", hl: "next.", intro: "Two days of deep technical talks, live coding and workshops for engineers who ship.", ctas: ["Get tickets", "See the agenda"], links: ["Speakers", "Agenda", "Workshops", "Venue", "Sponsors"], visual: "countdown", stats: [["Stages", "4"], ["Talks", "40+"], ["Hack night", "Day 1"]] },
-  { name: "Carnival", url: "artsmela.in", category: "Festival", bg: "#FAF2F6", fg: "#1A1423", muted: "#6B5A70", accent: "#FF4F8B", accent2: "#FFD43B", onAccent: "#FFFFFF", card: "#FFFFFF", line: "#1A1423", font: "'Bricolage Grotesque', system-ui, sans-serif", offset: true,
-    short: "ARTS MELA", badge: "3 days · 6 stages", tag: "2027", title: "City Arts", hl: "Mela", intro: "Music, food, theatre and craft across six stages in the old mill district.", ctas: ["Get tickets", "See the line-up"], links: ["Line-up", "Eat & do", "Tickets", "Map", "FAQ"], visual: "lineup", stats: [["Stages", "6"], ["Artists", "120"], ["Food stalls", "40"]] },
-  { name: "Build", url: "build36.planyt.in", category: "Hackathon", bg: "#0E0C17", fg: "#F4F2FF", muted: "#A9A3C7", accent: "#7C5CFF", accent2: "#4ADE80", onAccent: "#FFFFFF", card: "#1E1B2E", line: "#2E2A45", font: "Unbounded, system-ui, sans-serif",
-    short: "BUILD/36", badge: "$ register --team", tag: "Free", title: "36 hours. Real problems.", hl: "₹10 lakh in prizes.", intro: "Build with mentors from India's best product teams. Teams of 2–4.", ctas: ["Register your team", "Read the problems"], links: ["Problems", "Prizes", "Timeline", "Mentors", "Rules"], visual: "terminal", stats: [["Hours", "36"], ["Teams", "250"], ["Mentors", "60"]] },
-  { name: "Pavilion", url: "mfgexpo.in", category: "Trade expo", bg: "#F2F3F5", fg: "#12161C", muted: "#596170", accent: "#FF8A1F", accent2: "#FFD000", onAccent: "#12161C", card: "#FFFFFF", line: "#D9DCE2", font: "Archivo, system-ui, sans-serif", upper: true, square: true,
-    short: "MFG EXPO", badge: "3 days · 5 halls", tag: "Trade only", title: "Build. Source.", hl: "Scale.", intro: "India's manufacturing expo: 400 exhibitors, 30,000 trade visitors.", ctas: ["Register to visit", "Book a stand"], links: ["Exhibitors", "Floor plan", "Seminars", "Visit", "Contact"], visual: "halls", stats: [["Exhibitors", "400"], ["Halls", "5"], ["Visitors", "30k"]] },
 ];
 
 /** Website spotlight: the four steps beside the template mock-up. */
